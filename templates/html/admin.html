@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Панель ментора</title>
+  <link rel="stylesheet" href="/static/css/admin.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<aside id="sidebar">
+  <div class="logo">EtoKursi</div>
+  <menu>
+    <ul>
+      <li><a href="#page-1" id="messages-btn" class="menu-link active">
+        <span class="icon fontawesome-envelope"></span>
+        Работы
+        <div class="menu-box-number">{{ if .Works }} {{len (.Works)}} {{ end }} </div>
+      </a></li>
+      <li><a id="invites-btn" class="menu-link" href="#page-2">
+        <span class="icon entypo-paper-plane"></span>
+        Задания</a></li>
+      <li><a id="events-btn" class="menu-link" href="#page-3">
+      <span class="icon entypo-calendar"></span>
+      Изменить курс</a></li>
+    </ul>
+  </menu>
+  <div class="profile">
+    <img src="http://placesheen.com/200/200" alt="Profile Picture" />
+    <p>ЭтоКурсы</p>
+    <a href="/logout"><span class="icon entypo-cog"></span>Выйти</a>
+  </div>
+</aside>
+<main>
+  <div id="page-1" class="content box-active">
+    <header>
+      {{ if .error }}
+      {{template "msg" .}}
+      {{end}}
+      {{ if .Works }}
+      <h1>У вас есть непроверенные работы!</h1><br>
+      {{ else }}
+      <h1>У вас нет непроверенных работ :)</h1><br>
+      {{end}}
+    </header>
+    <ul>
+      {{range $key, $value := .Works }}
+      <li>
+      <form method="post">
+        <div class="name"  style="font-size: 21px;font-family: Poppins;">{{$value.Student}}</div>
+        <div class="subject"><a href="{{$value.Link}}" style="font-size: 21px;text-decoration: none;font-family: Poppins;">{{$value.Link}}</a></div>
+        <div class="time">11:32 pm</div>&nbsp;&nbsp;
+        <input type="radio" name="verdict" value="{{$value.Student}} - ok" class="ok">
+        <input type="radio" name="verdict" value="{{$value.Student}} - bad" class="bad">
+        <button>Оценить</button>
+      </form>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+  <div id="page-3" class="content">
+    <header>
+      <h2>Редактировать</h2>
+      <div class="function-buttons"><span class="reply">Имя курса</span></div>
+    </header>
+    <form method="post">
+    &nbsp;<textarea name="html" style="width: 99%; height:700px; font-size:30px;" spellcheck="false">{{.Tasks}}
+    </textarea>
+    <br><br>
+    &nbsp;<button>Сохранить</button>
+    </form>
+  </div>
+  <div id="page-2" class="content">
+    <header>
+      <h2>Ваши задания</h2>
+      <div class="function-buttons"><span class="reply">Курс - Имя Курса</span></div>
+    </header>
+    {{ template "tasks" . }}
+    <br>
+  </div>
+
+<!-- partial -->
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script  src="/static/js/admin.js"></script>
+</main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Решение</title>
+    <link rel="stylesheet" href="/static/css/message.css">
+    {{ if .error }}
+    <link rel="stylesheet" href="/static/css/bad_reg_style.css">
+    {{ else }}
+    <link rel="stylesheet" href="/static/css/reg_style.css">
+    {{ end }}
+    <link rel="stylesheet" href="/static/css/multiple_choice.css">
+    <link rel="stylesheet" href="/static/css/faq.css">
+</head>
+<body>
+{{ if .error }}
+{{template "msg" .}}
+{{end}}
+<form class="login" method="post">
+    {{ if .error }}
+    <h1>Error!</h1>
+    {{ else }}
+    <h1 class="q" style="font-size:20px">Отправьте ваше решение на проверку!</h1>
+    <input type="text" placeholder="Ссылка на pull request" name="pullURL">
+    <button> Отправить </button>
+    <div class="second" ID="second">
+        <p class="second__b" ID="btn" style="color:white">FAQ</p>
+        <div class="second__content">
+            <div>
+                <h2 class="vendor">В разработке</h2>
+            </div>
+        </div>
+    </div>
+    {{end}}
+</form>
+
+<script  src="/static/js/faq.js"></script>
+<script  src="/static/js/message.js"></script>
+</body>
+</html>

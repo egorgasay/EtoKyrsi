@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>404 Page</title>
+
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/static/css/404.css">
+</head>
+<body>
+<div class="flex-center position-ref full-height">
+  <div class="code">
+    404 </div>
+  {{ if .sent }}
+  <div class="message" style="padding: 10px;">Ментор еще не проверил вашу работу </div>
+  {{ else }}
+  <div class="message" style="padding: 10px;">Страница не найдена </div>
+  {{ end }}
+</div>
+</body>
+</html>

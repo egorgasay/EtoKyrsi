@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Вход</title>
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/reg_style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="entrance">
+        <!--partial:index.partial.html -->
+
+        {{ if .err }}
+        <h1 class="h1" style="color: darkred">{{.err}}</h1>
+        {{ else }}
+        <h1 class="h1">Войти как студент</h1>
+        {{ end }}
+        <form class="login" method="post" class="form">
+
+          <input type="text" placeholder="Логин" name="username" class="input">
+          <input type="password" placeholder="Пароль" name="password" class="input">
+        <div class="mentors">
+          <button class="btn" type="submit">Войти</button>
+          <a href="/mentor-login" class="a__1">Я ментор!</a>
+        </div>
+        </form>
+        <a href="/reg" class="a__2">Еще нет аккаунта?</a>
+      </div>
+    </div>
+  </header>
+</body>
+</html>

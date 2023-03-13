@@ -1,0 +1,219 @@
+@import url(http://weloveiconfonts.com/api/?family=entypo|fontawesome);
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Poppins:wght@400;700&display=swap");
+
+/* entypo */
+[class*=entypo-] {
+  font-family: "entypo", sans-serif;
+}
+
+/* fontawesome */
+[class*=fontawesome-] {
+  font-family: "FontAwesome", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  position: relative;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+  color: #888;
+}
+
+ul {
+  list-style: none;
+}
+
+#sidebar {
+  position: fixed;
+  background: black;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 300px;
+  box-sizing: border-box;
+}
+#sidebar .logo {
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+  font-size: 250%;
+  color: #b1b9c5;
+  font-family: "Georgia";
+}
+#sidebar a {
+  padding: 15px 25px;
+  display: block;
+  position: relative;
+  color: #fff;
+  transition: all 0.2s ease;
+  font-size: 22px;
+}
+#sidebar a.active {
+  background: brown;
+}
+#sidebar a:hover {
+  background: brown;
+  transition: all 0.2s ease;
+}
+#sidebar .icon {
+  margin-right: 10px;
+  color: gray;
+}
+#sidebar .menu-box-number {
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  background: black;
+  width: 30px;
+  height: 20px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 20px;
+}
+#sidebar .profile {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+#sidebar .profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+#sidebar .profile p {
+  color: #fff;
+  margin-bottom: 25px;
+}
+#sidebar .profile a {
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+#sidebar .profile a:hover {
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+
+main {
+  position: absolute;
+  top: 0;
+  left: 300px;
+  right: 0;
+}
+main .content {
+  display: none;
+  opacity: 0;
+}
+main .box-active {
+  display: block;
+  opacity: 1;
+}
+main header {
+  padding: 25px;
+  height: 75px;
+  display: block;
+  line-height: 75px;
+}
+main header h2 {
+  display: inline-block;
+}
+main header .function-buttons {
+  display: inline-block;
+  float: right;
+}
+main ul {
+  display: block;
+  position: relative;
+}
+main ul li {
+  position: relative;
+  display: block;
+  height: 45px;
+  line-height: 43px;
+  transition: all 0.2s ease;
+}
+main ul li:hover {
+  cursor: pointer;
+  background: #f2f2f2;
+  transition: all 0.2s ease;
+}
+main ul li:hover > .name, main ul li:hover > .subject {
+  color: black;
+}
+main ul li div {
+  float: left;
+  color: brown;
+}
+main ul li .name {
+  padding-left: 25px;
+  width: 200px;
+}
+main ul li .time {
+  float: right;
+  color: #bfbfbf;
+  padding-right: 25px;
+}
+
+.ok {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid green;
+  transition: 0.2s all linear;
+  outline: none;
+  margin-right: 5px;
+
+
+  position: relative;
+  top: 4px;
+}
+
+.bad {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid red;
+  transition: 0.2s all linear;
+  outline: none;
+  margin-right: 5px;
+
+
+  position: relative;
+  top: 4px;
+}
+
+input:checked {
+  border: 6px solid black;
+}
+
+button {
+  border: none;
+  padding: 0.8em 1.9em;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  font-weight: 600;
+  background: brown;
+  color: white;
+}

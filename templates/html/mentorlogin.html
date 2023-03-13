@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Вход</title>
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/reg_style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<header>
+  <div class="container">
+    <div class="entrance">
+      <!--partial:index.partial.html -->
+
+      {{ if .err }}
+      <h1 class="h1" style="color: darkred">{{.err}}</h1>
+      {{ else }}
+      <h1 class="h1">Ключ ментора</h1>
+      {{ end }}
+      <form class="login" method="post" class="form">
+
+        <input type="password" placeholder="Ключ" name="password" class="input">
+        <div class="mentors">
+          <button class="btn" type="submit">Войти</button>
+          <a href="/login" class="a__1">Я студент!</a>
+        </div>
+      </form>
+      <a href="/reg" class="a__2">Еще нет аккаунта?</a>
+    </div>
+  </div>
+</header>
+</body>
+</html>

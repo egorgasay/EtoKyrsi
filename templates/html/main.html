@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{if .msg}}
+<div style="margin-bottom: -7em;">
+{{ template "msg-good" .}}
+</div>
+{{else if and (not .error) (.query)}}
+{{ template "table" .}}
+{{else if .error}}
+<br>
+{{ template "msg" .}}
+{{end}}
+<form method="post">
+    <div class="execute">
+    <button class="button" type="submit"> ОТПРАВИТЬ </button>
+    </div>
+    <textarea name="query" style="border-color:#fff;" placeholder="Введите ссылку на pull request" ID="editing" spellcheck="false"></textarea>
+</form>
+<script src="/static/js/script.js"></script>
+<script src="/static/js/message.js"></script>
+<script  src="/static/js/nav.js"></script>
+{{ end }}
