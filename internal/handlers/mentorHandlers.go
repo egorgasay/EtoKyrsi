@@ -58,7 +58,7 @@ func (h Handler) MentorPostHandler(c *gin.Context) {
 	pullURL := c.PostForm("verdict")
 	html := c.PostForm("html")
 	if pullURL == "" && html != "" {
-		err := h.logic.UpdateHtml(username, html)
+		err := h.logic.UpdateTasks(username, html)
 		if err != nil {
 			log.Println(err)
 			c.HTML(http.StatusOK, "admin.html", gin.H{"error": "Ошибка сервера"})

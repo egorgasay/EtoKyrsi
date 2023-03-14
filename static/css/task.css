@@ -88,6 +88,11 @@ body {
   margin-top: 15px; 
 }
 
+.simple-text {
+  padding: 14px 17px 26px;
+  margin-top: 15px;
+}
+
 .important {
   background-color: #ff3d3d;
   border: 3px solid #000;

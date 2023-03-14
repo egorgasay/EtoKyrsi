@@ -13,7 +13,7 @@ func (uc UseCase) GetWorks(username string) ([]repository.Work, error) {
 }
 
 func (uc UseCase) GetTasks(username string) (string, error) {
-	file, err := os.OpenFile("templates/html/task.htm", os.O_RDONLY|os.O_CREATE|os.O_APPEND, 0777)
+	file, err := os.OpenFile("templates/html/tasks-mup.htm", os.O_RDONLY|os.O_CREATE|os.O_APPEND, 0777)
 	if err != nil {
 		return "", err
 	}
