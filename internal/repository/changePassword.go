@@ -4,7 +4,7 @@ import "errors"
 
 func (s Storage) ChangePassword(username, oldPassword, newPassword string) error {
 	prepareCurrentPassword, err := s.DB.Prepare(
-		`SELECT password FROM Users WHERE student = ?`)
+		`SELECT password FROM Users WHERE student = $1`)
 	if err != nil {
 		return err
 	}
@@ -16,7 +16,7 @@ func (s Storage) ChangePassword(username, oldPassword, newPassword string) error
 	}
 
 	prepareUpdatePassword, err := s.DB.Prepare(
-		`UPDATE Users SET password = ? WHERE student = ?`)
+		`UPDATE Users SET password = $1 WHERE student = $2`)
 	if err != nil {
 		return err
 	}

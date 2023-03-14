@@ -3,8 +3,8 @@ package repository
 func (s Storage) SetVerdict(student, verdict string) error {
 	query := `
 	UPDATE Users 
-	SET msg = ?
-	WHERE student = ?;
+	SET msg = $1
+	WHERE student = $2;
 `
 	stmt, err := s.DB.Prepare(query)
 	if err != nil {
@@ -25,7 +25,7 @@ UPDATE Users
 SET 
     task_id = task_id + 1, 
 	msg = ''
-WHERE student = ?`
+WHERE student = $1`
 
 	stmt, err := s.DB.Prepare(query)
 	if err != nil {
@@ -41,7 +41,7 @@ WHERE student = ?`
 }
 
 func (s Storage) AddPullRequest(link, student string) error {
-	query := `INSERT INTO PullRequests (link, student) VALUES (?, ?)`
+	query := `INSERT INTO PullRequests (link, student) VALUES ($1, $2)`
 
 	stmt, err := s.DB.Prepare(query)
 	if err != nil {

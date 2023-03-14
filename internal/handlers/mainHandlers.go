@@ -41,7 +41,7 @@ func (h Handler) MainHandler(c *gin.Context) {
 
 	pending, err := h.logic.CheckIsPending(username)
 	if err != nil {
-		c.HTML(http.StatusOK, "task.html", gin.H{"task": id, "error": err})
+		c.HTML(http.StatusOK, "task.htm", gin.H{"task": id, "error": err})
 		return
 	}
 
@@ -50,7 +50,7 @@ func (h Handler) MainHandler(c *gin.Context) {
 		err := h.logic.SendPullRequest(pullURL, username)
 		if err != nil {
 			log.Println(err)
-			c.HTML(http.StatusOK, "task.html", gin.H{"task": id, "error": err, "Username": username})
+			c.HTML(http.StatusOK, "task.htm", gin.H{"task": id, "error": err, "Username": username})
 			return
 		}
 		pending = true

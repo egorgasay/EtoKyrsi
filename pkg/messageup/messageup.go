@@ -58,12 +58,14 @@ var inputConfirm Template = ` {{ if and .task (not .IsPending) }}
     </center>
     {{ end }}`
 
-var lesson Template = `<section class="lesson">
-	<div class="container">
+var lesson Template = `{{ if or (eq .task 1) (not .task) }}
+	<section class="lesson">
+		<div class="container">
 `
 
 var endLesson Template = `	</div>
 </section>
+{{ end }}
 `
 
 var header Template = `<div class="start">
@@ -135,10 +137,10 @@ func doHeader(lines []string) (string, error) {
 }
 
 func doLesson(lines []string) (string, error) {
-	return do(lines, lesson)
+	return string(lesson), nil
 }
 func doEndLesson(lines []string) (string, error) {
-	return do(lines, endLesson)
+	return string(endLesson), nil
 }
 
 func doInputConfirm(lines []string) (string, error) {

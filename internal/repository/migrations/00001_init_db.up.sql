@@ -4,7 +4,7 @@ create table Users
     task_id  INTEGER,
     password TEXT not null,
     pending  INTEGER,
-    msg      INTEGER
+    msg      TEXT
 );
 create table PullRequests
 (

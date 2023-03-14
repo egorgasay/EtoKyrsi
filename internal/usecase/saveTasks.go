@@ -25,7 +25,7 @@ func (uc UseCase) UpdateTasks(username string, mup string) error {
 	}
 	defer file.Close()
 
-	_, err = file.Write([]byte(`{{define "tasks"}}` + html + `{{end}}`))
+	_, err = file.Write([]byte(`{{define "tasks"}}` + html + `{{end}}{{template "tasks" .}}`))
 	if err != nil {
 		return err
 	}
