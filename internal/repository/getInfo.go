@@ -3,7 +3,7 @@ package repository
 import "database/sql"
 
 func (s Storage) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
-	query := "SELECT task_id, msg FROM Users WHERE student = ?"
+	query := "SELECT task_id, msg FROM Users WHERE student = $1"
 	row := s.DB.QueryRow(query, username)
 
 	err := row.Err()

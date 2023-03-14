@@ -42,12 +42,21 @@ var msgWarn Template = `<div class="text important">
 </div>
 `
 
-var inputConfirm Template = `<br><form method="post">
-	<center>
-        <input name="pullURL" class="input" placeholder="Ссылка на PullRequest" required>
-        <button type="submit" class="btn">Отправить решение</button>
+var inputConfirm Template = ` {{ if and .task (not .IsPending) }}
+    <br>
+      <form method="post">
+        <center>
+        <input name="pullURL" class="input" placeholder="Ссылка на решение" required>
+      <button type="submit" class="btn">Отправить решение</button>
+      </center>
+      </form>
+      {{end}}
+    {{ if .IsPending}}
+    <br>
+    <center>
+      <p>Ментор еще не проверил вашу работу!</p>
     </center>
-</form>`
+    {{ end }}`
 
 var lesson Template = `<section class="lesson">
 	<div class="container">
@@ -133,7 +142,7 @@ func doEndLesson(lines []string) (string, error) {
 }
 
 func doInputConfirm(lines []string) (string, error) {
-	return do(lines, inputConfirm)
+	return string(inputConfirm), nil
 }
 
 func doSimpleText(lines []string) (string, error) {
