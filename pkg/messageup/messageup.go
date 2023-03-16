@@ -43,7 +43,7 @@ var msg Template = `<div class="text">
 `
 
 var msgWarn Template = `<div class="text important">
-	Важно! Не мержите код в основную ветку до того как я приму код.
+	{{ . }}
 </div>
 `
 
@@ -83,6 +83,8 @@ var newLine Template = `<br>`
 
 var msgHeader Template = `<h2 class="h2">{{ . }}</h2>`
 
+var text Template = `<h3 style="font-size:32px">{{ . }}</h3>`
+
 var end Template = `
     <script src="/static/js/message.js"></script>
   </body>
@@ -120,10 +122,15 @@ var actions = map[action]Middleware{
 	"@n":          doNewLine,
 	"@btn-link":   doButtonLink,
 	"@st":         doSimpleText,
+	"@text":       doText,
 }
 
 func doMSG(lines string, params []string) (string, error) {
 	return do(lines, msg)
+}
+
+func doText(lines string, params []string) (string, error) {
+	return do(lines, text)
 }
 
 func doNewLine(lines string, params []string) (string, error) {
