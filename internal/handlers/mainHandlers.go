@@ -3,6 +3,7 @@ package handlers
 import (
 	"checkwork/internal/globals"
 	"checkwork/internal/usecase"
+	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -29,19 +30,22 @@ func (h Handler) MainHandler(c *gin.Context) {
 
 	id, msg, err := h.logic.GetTaskIDAndMsg(username)
 	if err != nil {
+		// TODO:
 		c.HTML(http.StatusOK, "task.htm", gin.H{"error": err})
 		return
 	}
 
+	filename := fmt.Sprintf("task-%d.htm", id)
+
 	if msg.String != "" {
-		c.HTML(http.StatusOK, "task.htm", gin.H{"task": id, "error": msg.String,
+		c.HTML(http.StatusOK, filename, gin.H{"error": msg.String,
 			"IsPending": false})
 		return
 	}
 
 	pending, err := h.logic.CheckIsPending(username)
 	if err != nil {
-		c.HTML(http.StatusOK, "task.htm", gin.H{"task": id, "error": err})
+		c.HTML(http.StatusOK, filename, gin.H{"error": err})
 		return
 	}
 
@@ -50,13 +54,13 @@ func (h Handler) MainHandler(c *gin.Context) {
 		err := h.logic.SendPullRequest(pullURL, username)
 		if err != nil {
 			log.Println(err)
-			c.HTML(http.StatusOK, "task.htm", gin.H{"task": id, "error": err, "Username": username})
+			c.HTML(http.StatusOK, filename, gin.H{"error": err, "Username": username})
 			return
 		}
 		pending = true
 	}
 
-	c.HTML(http.StatusOK, "task.htm", gin.H{"task": id, "IsPending": pending, "Username": username})
+	c.HTML(http.StatusOK, filename, gin.H{"IsPending": pending, "Username": username})
 }
 
 func (h Handler) NotFoundHandler(c *gin.Context) {

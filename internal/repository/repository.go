@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"checkwork/internal/entity"
 	"database/sql"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -33,8 +34,11 @@ type IStorage interface {
 
 	SetVerdict(student, verdict string) error
 	DeletePullRequest(username, student string) error
-	UpdateTask(student string) error
+	UpdateTask(num int, title string) error
+	UpdateUserScore(student string) error
 	AddPullRequest(link, student string) error
+	GetTasks(username string) ([]entity.Task, error)
+	GetTitle(number int) (string, error)
 }
 
 type Storage struct {

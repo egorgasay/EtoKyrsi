@@ -26,6 +26,7 @@ var begin Template = `<!DOCTYPE html>
     <link rel="stylesheet" href="/static/css/message.css">
   </head>
   <body>
+{{ template "change" .}}
 	<header>
 	{{ if and (.error) (.task) }}
     {{ template "msg" .}}
@@ -34,7 +35,7 @@ var begin Template = `<!DOCTYPE html>
         <a href="/logout"><img src="/static/img/exit.svg" alt="exit"/></a>
       </div>
     </header>
-
+	<div class="container">
 `
 
 var msg Template = `<div class="text">
@@ -54,7 +55,7 @@ var lesson Template = `
 		<div class="container">
 `
 
-var endLesson Template = `{{ if and .task (not .IsPending) }}
+var endLesson Template = `{{ if and (not .Task) (not .IsPending) }}
     <br>
       <form method="post">
         <center>
@@ -71,7 +72,6 @@ var endLesson Template = `{{ if and .task (not .IsPending) }}
     {{ end }}
 	</div>
 </section>
-{{ end }}
 `
 
 var header Template = `<div class="start">
@@ -85,7 +85,8 @@ var msgHeader Template = `<h2 class="h2">{{ . }}</h2>`
 
 var text Template = `<h3 style="font-size:32px">{{ . }}</h3>`
 
-var end Template = `
+var end Template = endLesson + `
+	</div>
     <script src="/static/js/message.js"></script>
   </body>
 </html>
@@ -225,7 +226,7 @@ func do(obj any, Template Template) (string, error) {
 }
 
 func ToHTML(mup string) (string, error) {
-	lines := strings.Split(mup, "\r\n")
+	lines := strings.Split(mup+"\r\n\n\r\n\n\r\n@n", "\r\n")
 	var storage = make([]string, 0)
 	br := false
 	var cat CommandAndText

@@ -1,0 +1,20 @@
+{{ define "change" }}{{ if .Task }}
+<link rel="stylesheet" type="text/css" href="/static/css/change-task.css">
+<div class="editor">
+    <br>
+    <form method="post" action="/mentor/change-task">
+        <label for="title">Название урока</label>
+        <input name="title" id="title" value="{{.Task.Name}}">
+        <input name="number" hidden="hidden" value="{{.Task.Number}}">
+      <div class="html">
+        <h2 style="text-align: center">MESSAGE UP</h2>
+          <br>
+        <textarea name="text" spellcheck="false">{{ .Task.Text }}</textarea>
+      </div>
+        <div class="toolbar">
+            <button>Сохранить</button>
+        </div>
+    </form>
+    <div class="preview">
+      <h2 style="text-align: center">Preview</h2>
+{{ end }}{{ end }}{{ template "change" .}}

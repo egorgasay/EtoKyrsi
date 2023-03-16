@@ -36,7 +36,7 @@ func (uc UseCase) HandleUserWork(username, student, verdict string) error {
 		return nil
 	}
 
-	err = uc.storage.UpdateTask(student)
+	err = uc.storage.UpdateUserScore(student)
 	if err != nil {
 		return err
 	}

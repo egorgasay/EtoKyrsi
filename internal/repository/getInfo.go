@@ -1,6 +1,9 @@
 package repository
 
-import "database/sql"
+import (
+	"checkwork/internal/entity"
+	"database/sql"
+)
 
 func (s Storage) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
 	query := "SELECT task_id, msg FROM Users WHERE student = $1"
@@ -50,4 +53,53 @@ func (s Storage) GetWorks(username string) ([]Work, error) {
 	}
 
 	return works, nil
+}
+
+func (s Storage) GetTasks(username string) ([]entity.Task, error) {
+	query := "SELECT task_id, title FROM Tasks"
+	prepare, err := s.DB.Prepare(query)
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := prepare.Query()
+	if err != nil {
+		return nil, err
+	}
+
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	var tasks = make([]entity.Task, 0)
+	for rows.Next() {
+		var task entity.Task
+
+		err = rows.Scan(&task.Number, &task.Name)
+		if err != nil {
+			return nil, err
+		}
+
+		tasks = append(tasks, task)
+	}
+
+	return tasks, nil
+}
+
+func (s Storage) GetTitle(number int) (string, error) {
+	query := "SELECT title FROM Tasks WHERE task_id = $1"
+	prepare, err := s.DB.Prepare(query)
+	if err != nil {
+		return "", err
+	}
+
+	row := prepare.QueryRow(number)
+	err = row.Err()
+	if err != nil {
+		return "", err
+	}
+
+	var title string
+	return title, row.Scan(&title)
 }

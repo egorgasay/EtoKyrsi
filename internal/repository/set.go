@@ -19,7 +19,7 @@ func (s Storage) SetVerdict(student, verdict string) error {
 	return nil
 }
 
-func (s Storage) UpdateTask(student string) error {
+func (s Storage) UpdateUserScore(student string) error {
 	query := `
 UPDATE Users 
 SET 
@@ -33,6 +33,22 @@ WHERE student = $1`
 	}
 
 	_, err = stmt.Exec(student)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s Storage) UpdateTask(num int, title string) error {
+	query := `INSERT INTO Tasks (task_id, title) VALUES ($1, $2) ON CONFLICT DO NOTHING `
+
+	stmt, err := s.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(num, title)
 	if err != nil {
 		return err
 	}
