@@ -1,7 +1,7 @@
 package repository
 
 func (s Storage) CheckPassword(username string, password string) (bool, error) {
-	query := "SELECT count(*) FROM Users WHERE student = $1 AND password = $2"
+	query := "SELECT count(*) FROM Users WHERE student = ? AND password = ?"
 	var res int
 
 	row := s.DB.QueryRow(query, username, password)

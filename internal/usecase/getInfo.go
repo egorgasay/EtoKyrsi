@@ -14,6 +14,10 @@ func (uc UseCase) GetWorks(username string) ([]repository.Work, error) {
 	return uc.storage.GetWorks(username)
 }
 
+func (uc UseCase) GetUsers() ([]entity.User, error) {
+	return uc.storage.GetUsers()
+}
+
 //func (uc UseCase) GetHTMLTask(number string) (func(obj any) (string, error), error) {
 //	str, err := convertFileToString("templates/html/task-" + number + ".htm")
 //	if err != nil {

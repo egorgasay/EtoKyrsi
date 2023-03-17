@@ -8,7 +8,7 @@ create table Users
 );
 create table PullRequests
 (
-    id      SERIAL primary key,
+    id      INTEGER PRIMARY KEY AUTOINCREMENT,
     link    TEXT not null,
     student TEXT references Users
 );

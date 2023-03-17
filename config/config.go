@@ -21,7 +21,7 @@ var f Flag
 
 func init() {
 	f.host = flag.String("a", defaultHost, "-a=host")
-	f.dsn = flag.String("d", "", "-d=connection_string")
+	f.dsn = flag.String("d", "etokyrsi", "-d=connection_string")
 	f.key = flag.String("k", "change_me", "-k=key")
 }
 
@@ -47,7 +47,7 @@ func New() *Config {
 	globals.Secret = []byte(*f.key)
 	return &Config{
 		DBConfig: &repository.Config{
-			DriverName:     "postgres",
+			DriverName:     "sqlite3",
 			DataSourceCred: *f.dsn,
 		},
 		MentorKey: *f.key,

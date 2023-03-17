@@ -27,18 +27,18 @@ section {
   margin-bottom: 10px;
 }
 
-.editor button {
-  background-color: #333;
-  border: none;
-  color: white;
-  cursor: pointer;
-  margin-left: 10px;
-  padding: 10px 20px;
-}
+/*.editor button {*/
+/*  background-color: #333;*/
+/*  border: none;*/
+/*  color: white;*/
+/*  cursor: pointer;*/
+/*  margin-left: 10px;*/
+/*  padding: 10px 20px;*/
+/*}*/
 
-.editor button:first-child {
-  margin-left: 0;
-}
+/*.editor button:first-child {*/
+/*  margin-left: 0;*/
+/*}*/
 
 .editor textarea {
   border: none;

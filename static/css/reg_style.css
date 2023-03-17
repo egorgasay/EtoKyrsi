@@ -1,8 +1,8 @@
 body {
   background-color: white;
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: black;
-  background:  #6A5ACD;
+  background:  black;
   padding: 200px 0px;
 }
 
@@ -21,7 +21,7 @@ body {
 }
 
 .h1 {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 40px;
   margin-bottom: 46px;
   text-align: center;
@@ -50,7 +50,7 @@ body {
   cursor: pointer;
   margin-right: 21px;
   border: 2px solid black;
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .btn:hover {
@@ -73,12 +73,12 @@ body {
   padding: 16px 35px;
   font-size: 18px;
   font-weight: 500;
-  background: #6A5ACD;
+  background: black;
   color: white;
   border-radius: 16px;
   cursor: pointer;
   border: 2px solid black;
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .a__1:hover {
@@ -96,5 +96,5 @@ justify-content: center;
 }
 
 .a__2:hover {
-  color: #800080;
+  color: gray;
 }

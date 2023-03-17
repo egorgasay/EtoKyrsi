@@ -28,7 +28,7 @@ var begin Template = `<!DOCTYPE html>
   <body>
 {{ template "change" .}}
 	<header>
-	{{ if and (.error) (.task) }}
+	{{ if .error }}
     {{ template "msg" .}}
     {{ end }}
       <div class="exit">

@@ -1,20 +1,26 @@
 {{ define "change" }}{{ if .Task }}
+{{ template "nav" .}}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/css/select.css">
+<link rel="stylesheet" href="/static/css/task.css" />
 <link rel="stylesheet" type="text/css" href="/static/css/change-task.css">
 <div class="editor">
     <br>
     <form method="post" action="/mentor/change-task">
-        <label for="title">Название урока</label>
+        <button onclick="window.location.replace('/mentor/change-task')"  class="admin-button" type="button" style="padding: 10px 20px; margin: auto">Вернуться назад</button>
+        <label for="title" style="align-items: center">Название урока</label>
         <input name="title" id="title" value="{{.Task.Name}}">
         <input name="number" hidden="hidden" value="{{.Task.Number}}">
+        <button onclick="window.location.replace('/mentor/delete-task?number={{ .Task.Number }}')"  class="admin-button" type="button" style="padding: 10px 20px; margin: auto; background: red">Удалить</button>
       <div class="html">
         <h2 style="text-align: center">MESSAGE UP</h2>
           <br>
         <textarea name="text" spellcheck="false">{{ .Task.Text }}</textarea>
       </div>
         <div class="toolbar">
-            <button>Сохранить</button>
+            <button class="admin-button" style="padding: 5px 20px; margin-top: 0px">Сохранить</button>
         </div>
     </form>
     <div class="preview">
-      <h2 style="text-align: center">Preview</h2>
+      <h2 style="text-align: center">Предпросмотр</h2>
 {{ end }}{{ end }}{{ template "change" .}}

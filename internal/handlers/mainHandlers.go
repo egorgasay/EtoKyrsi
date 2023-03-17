@@ -37,18 +37,7 @@ func (h Handler) MainHandler(c *gin.Context) {
 
 	filename := fmt.Sprintf("task-%d.htm", id)
 
-	if msg.String != "" {
-		c.HTML(http.StatusOK, filename, gin.H{"error": msg.String,
-			"IsPending": false})
-		return
-	}
-
-	pending, err := h.logic.CheckIsPending(username)
-	if err != nil {
-		c.HTML(http.StatusOK, filename, gin.H{"error": err})
-		return
-	}
-
+	var pending = false
 	pullURL := c.PostForm("pullURL")
 	if pullURL != "" {
 		err := h.logic.SendPullRequest(pullURL, username)
@@ -58,6 +47,18 @@ func (h Handler) MainHandler(c *gin.Context) {
 			return
 		}
 		pending = true
+	} else {
+		pending, err = h.logic.CheckIsPending(username)
+		if err != nil {
+			c.HTML(http.StatusOK, filename, gin.H{"error": err})
+			return
+		}
+
+		if msg.String != "" {
+			c.HTML(http.StatusOK, filename, gin.H{"error": msg.String,
+				"IsPending": false})
+			return
+		}
 	}
 
 	c.HTML(http.StatusOK, filename, gin.H{"IsPending": pending, "Username": username})

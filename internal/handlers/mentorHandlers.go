@@ -39,13 +39,26 @@ func (h Handler) MentorGetHandler(c *gin.Context) {
 		return
 	}
 
+	c.HTML(http.StatusOK, "admin.html", gin.H{"Works": works})
+}
+
+func (h Handler) GetChangeTask(c *gin.Context) {
+	session := sessions.Default(c)
+	user := session.Get(globals.Userkey)
+	if user == nil {
+		c.Redirect(http.StatusFound, "/login")
+		return
+	}
+
+	username, _ := user.(string)
+
 	lessons, err := h.logic.GetTasks(username)
 	if err != nil {
 		c.HTML(http.StatusOK, "admin.html", gin.H{"error": err})
 		return
 	}
 
-	c.HTML(http.StatusOK, "admin.html", gin.H{"Works": works, "Lessons": lessons, "Count": len(lessons)})
+	c.HTML(http.StatusOK, "admin.html", gin.H{"Lessons": lessons, "Count": len(lessons)})
 }
 
 func (h Handler) MentorPostHandler(c *gin.Context) {
@@ -58,13 +71,14 @@ func (h Handler) MentorPostHandler(c *gin.Context) {
 	}
 
 	username := user.(string)
-	pullURL := c.PostForm("verdict")
-	if pullURL == "" {
+	verdict := c.PostForm("verdict")
+	msg := c.PostForm("msg")
+	if verdict == "" {
 		c.Redirect(http.StatusFound, "/mentor")
 		return
 	}
 
-	split := strings.Split(pullURL, " - ")
+	split := strings.Split(verdict, " - ")
 
 	if len(split) != 2 {
 		log.Println("Неправильный вердикт")
@@ -73,7 +87,7 @@ func (h Handler) MentorPostHandler(c *gin.Context) {
 	}
 
 	student, status := split[0], split[1]
-	err := h.logic.HandleUserWork(username, student, status)
+	err := h.logic.HandleUserWork(username, student, status, msg)
 	if err != nil {
 		log.Println(err)
 		c.HTML(http.StatusOK, "admin.html", gin.H{"error": err})
@@ -106,7 +120,7 @@ func (h Handler) ViewTask(c *gin.Context) {
 func (h Handler) viewHelper(c *gin.Context, username, number string) {
 	var task entity.Task
 	if number == "NEW" {
-		count := c.PostForm("count")
+		count := c.Request.URL.Query().Get("count")
 		if count == "" {
 			count = "0"
 		}
@@ -149,4 +163,52 @@ func (h Handler) ChangeTask(c *gin.Context) {
 	}
 
 	h.viewHelper(c, username, number)
+}
+
+func (h Handler) DeleteTask(c *gin.Context) {
+	session := sessions.Default(c)
+	user := session.Get(globals.Userkey)
+	if user == nil {
+		c.Redirect(http.StatusFound, "/login")
+		return
+	}
+
+	username, _ := user.(string)
+
+	number := c.Request.URL.Query().Get("number")
+	if err := h.logic.DeleteTasks(username, number); err != nil {
+		c.HTML(http.StatusOK, "change-task.html", gin.H{"error": err})
+		return
+	}
+
+	c.Redirect(http.StatusTemporaryRedirect, "/mentor/change-task")
+}
+
+func (h Handler) GetUsers(c *gin.Context) {
+	session := sessions.Default(c)
+	user := session.Get(globals.Userkey)
+	if user == nil {
+		c.Redirect(http.StatusFound, "/login")
+		return
+	}
+
+	username, _ := user.(string)
+	isMentor, err := h.logic.CheckIsMentor(username)
+	if err != nil {
+		c.HTML(http.StatusOK, "admin.html", gin.H{"error": "В доступе отказано"})
+		return
+	}
+
+	if !isMentor {
+		c.Redirect(http.StatusFound, "/")
+		return
+	}
+
+	users, err := h.logic.GetUsers()
+	if err != nil {
+		c.HTML(http.StatusOK, "users.html", gin.H{"error": err})
+		return
+	}
+
+	c.HTML(http.StatusOK, "users.html", gin.H{"Users": users})
 }

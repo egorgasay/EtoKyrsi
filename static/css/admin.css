@@ -1,219 +1,258 @@
-@import url(http://weloveiconfonts.com/api/?family=entypo|fontawesome);
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Poppins:wght@400;700&display=swap");
-
-/* entypo */
-[class*=entypo-] {
-  font-family: "entypo", sans-serif;
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	outline: none;
+	list-style: none;
 }
 
-/* fontawesome */
-[class*=fontawesome-] {
-  font-family: "FontAwesome", sans-serif;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	outline: none;
+	list-style: none;
 }
 
-* {
+
+:root {
+  --step--2: clamp(0.69rem, calc(0.58rem + 0.60vw), 1.00rem);
+  --step--1: clamp(0.83rem, calc(0.67rem + 0.81vw), 1.25rem);
+  --step-0: clamp(1.00rem, calc(0.78rem + 1.10vw), 1.56rem);
+  --step-1: clamp(1.20rem, calc(0.91rem + 1.47vw), 1.95rem);
+  --step-2: clamp(1.44rem, calc(1.05rem + 1.95vw), 2.44rem);
+  --step-3: clamp(1.73rem, calc(1.21rem + 2.58vw), 3.05rem);
+  --step-4: clamp(2.07rem, calc(1.39rem + 3.40vw), 3.82rem);
+  --step-5: clamp(2.49rem, calc(1.60rem + 4.45vw), 4.77rem);
+	
+	/* Font style */
+	
+
+	/* Color style */
+	
+	/*
+	--color-primary:#c51350;
+	--color-secondary:#ff9a3c;
+	--color-body:#333;
+	--color-bg: #006600;
+	--color-primary-dark:#007f67;
+	--color-error:#cc3333;
+	--color-success:#4bb544;
+	--color-link:#cdcdcc;
+	--color-border:darkgrey;
+	--bs:#ffa857;
+	*/
+	
+	--color-primary: #0575E6;
+	--color-secondary: #6dd5ed;
+	--color-primary-light:#8dc6ff;
+	--color-primary-dark:#021B79;
+	--color-error:#cc3333;
+	--color-success:#4bb544;
+	--color-link:#606470;
+	--color-header-dark:#393e46;
+	--color-background:#f5f9ee;
+	--color-border-sc:#ececec;
+	--color-border-focus:#a9d7f6;
+	--color-border:#eeeeee;
+	--bs:#ffa857;
+	--color-percentage:#5f6769;
+	--color-header-light:#9ba6a5;
+	--color-border-focus:#a9d7f6;
+	--color-input-background:#f5f9ee;
+	--gradient: linear-gradient(135deg var(--color-primary), var(--color-secondary));
+	
+	
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
   margin: 0;
-  padding: 0;
 }
 
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
 body {
-  font-family: "Open Sans", sans-serif;
-  position: relative;
-  color: black;
+  min-height:  100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
 }
 
-a {
-  text-decoration: none;
-  color: #888;
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+ text-decoration-skip-ink: auto;
 }
 
-ul {
-  list-style: none;
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
 }
 
-#sidebar {
-  position: fixed;
-  background: black;
-  height: 100%;
-  top: 0;
-  left: 0;
-  width: 300px;
-  box-sizing: border-box;
-}
-#sidebar .logo {
-  width: 100%;
-  height: 200px;
-  text-align: center;
-  line-height: 200px;
-  font-size: 250%;
-  color: #b1b9c5;
-  font-family: "Georgia";
-}
-#sidebar a {
-  padding: 15px 25px;
-  display: block;
-  position: relative;
-  color: #fff;
-  transition: all 0.2s ease;
-  font-size: 22px;
-}
-#sidebar a.active {
-  background: brown;
-}
-#sidebar a:hover {
-  background: brown;
-  transition: all 0.2s ease;
-}
-#sidebar .icon {
-  margin-right: 10px;
-  color: gray;
-}
-#sidebar .menu-box-number {
-  position: absolute;
-  top: 18px;
-  right: 25px;
-  background: black;
-  width: 30px;
-  height: 20px;
-  border-radius: 20px;
-  text-align: center;
-  font-size: 11px;
-  line-height: 20px;
-}
-#sidebar .profile {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-}
-#sidebar .profile img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-#sidebar .profile p {
-  color: #fff;
-  margin-bottom: 25px;
-}
-#sidebar .profile a {
-  opacity: 0.5;
-  transition: all 0.2s ease;
-}
-#sidebar .profile a:hover {
-  opacity: 1;
-  transition: all 0.2s ease;
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+select {
+  font: inherit;
 }
 
-main {
-  position: absolute;
-  top: 0;
-  left: 300px;
-  right: 0;
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+   scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
-main .content {
-  display: none;
-  opacity: 0;
+
+html, body {
+  height:100%
 }
-main .box-active {
-  display: block;
-  opacity: 1;
+
+.admin-button {
+	border: none;
+	margin-top: 10px;
+	padding: 0.8em 1.9em;
+	border-radius: 0.35rem;
+	cursor: pointer;
+	font-weight: 400;
+	background: black;
+	color: white;
 }
-main header {
-  padding: 25px;
-  height: 75px;
-  display: block;
-  line-height: 75px;
+
+.admin-container {
+	font-family: 'Montserrat', sans-serif;
+	width: 70%;
+	display: flex;
+	margin: auto;
+	padding: 2rem;
 }
-main header h2 {
-  display: inline-block;
+
+nav {
+	font-size: 22px;
+	width: 100%;
+	background-color: #000;
 }
-main header .function-buttons {
-  display: inline-block;
-  float: right;
+
+nav .logo {
+	color: #fff;
+	display: flex;
+	align-items: center;
+	flex: 1 1 auto;
+	font-size: var(--step-0);
 }
-main ul {
-  display: block;
-  position: relative;
+
+nav ul {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 0 1 auto;
 }
-main ul li {
-  position: relative;
-  display: block;
-  height: 45px;
-  line-height: 43px;
-  transition: all 0.2s ease;
+
+nav ul li {
+	margin: 1rem;
 }
-main ul li:hover {
-  cursor: pointer;
-  background: #f2f2f2;
-  transition: all 0.2s ease;
-}
-main ul li:hover > .name, main ul li:hover > .subject {
-  color: black;
-}
-main ul li div {
-  float: left;
-  color: brown;
-}
-main ul li .name {
-  padding-left: 25px;
-  width: 200px;
-}
-main ul li .time {
-  float: right;
-  color: #bfbfbf;
-  padding-right: 25px;
+
+nav ul li a {
+	text-decoration: none;
+	color: #ccc;
 }
 
 .ok {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 
-  border-radius: 50%;
-  width: 16px;
-  height: 16px;
+	border-radius: 50%;
+	width: 16px;
+	height: 16px;
 
-  border: 2px solid green;
-  transition: 0.2s all linear;
-  outline: none;
-  margin-right: 5px;
+	border: 2px solid green;
+	transition: 0.2s all linear;
+	outline: none;
+	margin-right: 5px;
 
 
-  position: relative;
-  top: 4px;
+	position: relative;
+	top: 4px;
 }
 
 .bad {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 
-  border-radius: 50%;
-  width: 16px;
-  height: 16px;
+	border-radius: 50%;
+	width: 16px;
+	height: 16px;
 
-  border: 2px solid red;
-  transition: 0.2s all linear;
-  outline: none;
-  margin-right: 5px;
+	border: 2px solid red;
+	transition: 0.2s all linear;
+	outline: none;
+	margin-right: 5px;
 
 
-  position: relative;
-  top: 4px;
+	position: relative;
+	top: 4px;
 }
 
-input:checked {
-  border: 6px solid black;
+ul {
+	display: block;
+	position: relative;
 }
-
-button {
-  border: none;
-  padding: 0.8em 1.9em;
-  border-radius: 0.35rem;
-  cursor: pointer;
-  font-weight: 600;
-  background: brown;
-  color: white;
+ul li {
+	position: relative;
+	display: block;
+	height: 45px;
+	line-height: 43px;
+	transition: all 0.2s ease;
+}
+.works ul li:hover {
+	cursor: pointer;
+	background: #f2f2f2;
+	transition: all 0.2s ease;
+}
+ul li:hover > .name, main ul li:hover > .subject {
+	color: black;
+}
+ul li div {
+	float: left;
+	color: black;
+}
+ul li .name {
+	padding-left: 25px;
+	width: 200px;
+}
+ul li .time {
+	float: right;
+	color: #bfbfbf;
+	padding-right: 25px;
 }

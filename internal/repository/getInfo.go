@@ -6,7 +6,7 @@ import (
 )
 
 func (s Storage) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
-	query := "SELECT task_id, msg FROM Users WHERE student = $1"
+	query := "SELECT task_id, msg FROM Users WHERE student = ?"
 	row := s.DB.QueryRow(query, username)
 
 	err := row.Err()
@@ -88,7 +88,7 @@ func (s Storage) GetTasks(username string) ([]entity.Task, error) {
 }
 
 func (s Storage) GetTitle(number int) (string, error) {
-	query := "SELECT title FROM Tasks WHERE task_id = $1"
+	query := "SELECT title FROM Tasks WHERE task_id = ?"
 	prepare, err := s.DB.Prepare(query)
 	if err != nil {
 		return "", err
@@ -102,4 +102,35 @@ func (s Storage) GetTitle(number int) (string, error) {
 
 	var title string
 	return title, row.Scan(&title)
+}
+
+func (s Storage) GetUsers() ([]entity.User, error) {
+	query := "SELECT student, task_id, msg FROM Users"
+	prepare, err := s.DB.Prepare(query)
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := prepare.Query()
+	if err != nil {
+		return nil, err
+	}
+
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	var users = make([]entity.User, 0)
+	for rows.Next() {
+		var user entity.User
+
+		err = rows.Scan(&user.Name, &user.Level, &user.LastComment)
+		if err != nil {
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+	return users, nil
 }

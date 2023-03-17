@@ -5,3 +5,9 @@ type Task struct {
 	Number int
 	Text   string
 }
+
+type User struct {
+	Name        string
+	Level       int
+	LastComment string
+}

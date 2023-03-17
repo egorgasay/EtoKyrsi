@@ -1,0 +1,16 @@
+html {
+  background-color: white;
+  font-family: 'Montserrat', sans-serif;
+}
+html #app {
+  margin-top: 20px;
+}
+html .round {
+  height: 60px;
+  border-radius: 60px;
+}
+
+.title,
+.content {
+  color: white !important;
+}

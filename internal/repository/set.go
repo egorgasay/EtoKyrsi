@@ -1,10 +1,12 @@
 package repository
 
+import "log"
+
 func (s Storage) SetVerdict(student, verdict string) error {
 	query := `
 	UPDATE Users 
-	SET msg = $1
-	WHERE student = $2;
+	SET msg = ?
+	WHERE student = ?;
 `
 	stmt, err := s.DB.Prepare(query)
 	if err != nil {
@@ -25,7 +27,7 @@ UPDATE Users
 SET 
     task_id = task_id + 1, 
 	msg = ''
-WHERE student = $1`
+WHERE student = ?`
 
 	stmt, err := s.DB.Prepare(query)
 	if err != nil {
@@ -41,15 +43,17 @@ WHERE student = $1`
 }
 
 func (s Storage) UpdateTask(num int, title string) error {
-	query := `INSERT INTO Tasks (task_id, title) VALUES ($1, $2) ON CONFLICT DO NOTHING `
+	query := `INSERT OR REPLACE INTO Tasks (task_id, title) VALUES (?, ?)`
 
 	stmt, err := s.DB.Prepare(query)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
 	_, err = stmt.Exec(num, title)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
@@ -57,7 +61,7 @@ func (s Storage) UpdateTask(num int, title string) error {
 }
 
 func (s Storage) AddPullRequest(link, student string) error {
-	query := `INSERT INTO PullRequests (link, student) VALUES ($1, $2)`
+	query := `INSERT INTO PullRequests (link, student) VALUES (?, ?)`
 
 	stmt, err := s.DB.Prepare(query)
 	if err != nil {

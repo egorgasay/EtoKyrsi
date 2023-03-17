@@ -43,3 +43,12 @@ func (uc UseCase) UpdateTasks(username, title, number, text string) error {
 
 	return nil
 }
+
+func (uc UseCase) DeleteTasks(username, number string) error {
+	num, err := strconv.Atoi(number)
+	if err != nil {
+		return err
+	}
+
+	return uc.storage.DeleteTask(num)
+}

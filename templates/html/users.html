@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ЭтоКурсы.ру</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css'>
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/css/users.css">
+    <link rel="stylesheet" href="/static/css/select.css">
+</head>
+<body>
+{{ template "nav" .}}
+<div class="container" id="app">
+    <div class="columns is-multiline">
+        {{ range .Users }}
+        <div class="column is-4">
+            <div class="card">
+                <div class="card-content" style="background: black">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="https://cdn1.ozone.ru/s3/multimedia-7/6265666831.jpg" alt="Image" class="round">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-5">{{ .Name}} </p>
+<!--                            <p class="subtitle is-5">{{ .Level}}</p>-->
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span>Последний отзыв:</span> {{ .LastComment}}
+                        <br>
+                        <span>Уровень:</span> {{ .Level}}
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+<script src='https://code.getmdl.io/1.3.0/material.min.js'></script>
+<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+</body>
+</html>

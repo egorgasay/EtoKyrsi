@@ -4,9 +4,9 @@ import (
 	"checkwork/internal/entity"
 	"database/sql"
 	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/postgres"
+	"github.com/golang-migrate/migrate/v4/database/sqlite3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	_ "github.com/lib/pq"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 )
 
@@ -19,6 +19,8 @@ type IStorage interface {
 	Disconnect() error
 	DeleteAccount() error
 	CreateUser(username, password string) error
+	UpdateUserScore(student string) error
+	GetUsers() ([]entity.User, error)
 
 	CheckPassword(username, password string) (bool, error)
 	CheckIsMentor(username string) (bool, error)
@@ -34,9 +36,10 @@ type IStorage interface {
 
 	SetVerdict(student, verdict string) error
 	DeletePullRequest(username, student string) error
-	UpdateTask(num int, title string) error
-	UpdateUserScore(student string) error
 	AddPullRequest(link, student string) error
+
+	UpdateTask(num int, title string) error
+	DeleteTask(num int) error
 	GetTasks(username string) ([]entity.Task, error)
 	GetTitle(number int) (string, error)
 }
@@ -59,7 +62,7 @@ func Init(cfg *Config) (IStorage, error) {
 }
 
 func New(db *sql.DB, pathToMigrations string) IStorage {
-	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	driver, err := sqlite3.WithInstance(db, &sqlite3.Config{})
 	if err != nil {
 		log.Fatal(err)
 		return nil

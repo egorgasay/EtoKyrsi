@@ -14,7 +14,7 @@ func (uc UseCase) SendPullRequest(line, student string) error {
 	return nil
 }
 
-func (uc UseCase) HandleUserWork(username, student, verdict string) error {
+func (uc UseCase) HandleUserWork(username, student, verdict, msg string) error {
 	err := uc.storage.DeletePullRequest(username, student)
 	if err != nil {
 		return err
@@ -26,9 +26,11 @@ func (uc UseCase) HandleUserWork(username, student, verdict string) error {
 	}
 
 	if verdict == "bad" {
-		verdict = "В работе есть недочеты! Ментор оставил замечания на гитхабе."
+		if msg == "" {
+			msg = "В работе есть недочеты! Ментор оставил замечания на гитхабе."
+		}
 
-		err := uc.storage.SetVerdict(student, verdict)
+		err := uc.storage.SetVerdict(student, msg)
 		if err != nil {
 			return err
 		}
