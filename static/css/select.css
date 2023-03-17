@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  user-select: none;
+}
+
+.form-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 750px;
+}
+
+select{
+  width: 400px;
+  max-width: 100%;
+  overflow-y: auto;
+  cursor: pointer;
+  padding: 15px 25px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  color: #444;
+  font-size: 18px;
+  box-shadow: -3px 3px 5px 0px rgba(0,0,0,0.10);
+}
+select option{
+  padding: 10px 20px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background-color: rgb(238, 238, 238);
+  white-space: pre-wrap;
+  cursor: pointer;
+}
+select option:hover{
+  background-color: rgb(223, 223, 223);
+}
+select option:checked{
+  box-shadow: 0 0 10px 100px #595959 inset;
+}
+select::-webkit-scrollbar-track
+{
+	background-color: #F5F5F5;
+	border-radius: 12px;
+}
+
+select::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+select::-webkit-scrollbar-thumb
+{
+	background-color: rgb(225, 225, 225);
+	border-radius: 12px;
+	background-image: -webkit-linear-gradient(90deg,
+	                                          rgba(160, 160, 160, 0.2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(160, 160, 160, 0.2) 50%,
+											  rgba(160, 160, 160, 0.2) 75%,
+											  transparent 75%,
+											  transparent)
+}
+select.fadeIn {
+  animation: fadeInDown 0.2s;
+}
+select.fadeOut{
+  animation: fadeInUp 0.2s;
+}

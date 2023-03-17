@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Панель ментора</title>
   <link rel="stylesheet" href="/static/css/admin.css">
+ <link rel="stylesheet" href="/static/css/select.css">
 
 </head>
 <body>
@@ -17,9 +18,9 @@
         Работы
         <div class="menu-box-number">{{ if .Works }} {{len (.Works)}} {{ end }} </div>
       </a></li>
-      <li><a id="invites-btn" class="menu-link" href="#page-2">
-        <span class="icon entypo-paper-plane"></span>
-        Задания</a></li>
+<!--      <li><a id="invites-btn" class="menu-link" href="#page-2">-->
+<!--        <span class="icon entypo-paper-plane"></span>-->
+<!--        Задания</a></li>-->
       <li><a id="events-btn" class="menu-link" href="#page-3">
       <span class="icon entypo-calendar"></span>
       Изменить курс</a></li>
@@ -63,25 +64,23 @@
       <h2>Редактировать</h2>
       <div class="function-buttons"><span class="reply">Имя курса</span></div>
     </header>
-    <form method="post">
-    &nbsp;<textarea name="html" style="width: 99%; height:700px; font-size:30px;" spellcheck="false">{{.Tasks}}
-    </textarea>
-    <br><br>
-    &nbsp;<button>Сохранить</button>
+    <form method="get" action="/mentor/view" class="form-select">
+      <input hidden="hidden" value="{{.Count}}" name="count">
+      {{ template "select" .}}
+<!--    &nbsp;<textarea name="html" style="width: 99%; height:700px; font-size:30px;" spellcheck="false">{{.Tasks}}-->
+<!--    </textarea>-->
+<!--    <br><br>-->
+    &nbsp;<button>Выбрать</button>
     </form>
   </div>
   <div id="page-2" class="content">
-    <header>
-      <h2>Ваши задания</h2>
-      <div class="function-buttons"><span class="reply">Курс - Имя Курса</span></div>
-    </header>
-    {{ template "tasks" . }}
-    <br>
+
   </div>
 
 <!-- partial -->
   <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script  src="/static/js/admin.js"></script>
+  <script  src="/static/js/select.js"></script>
 </main>
 </body>
 </html>

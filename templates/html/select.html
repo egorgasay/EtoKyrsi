@@ -1,0 +1,9 @@
+{{ define "select" }}
+<select size="1" autocomplete="off" name="select">
+  <option value="">Выберете</option>
+  <option value="NEW">Создать новый урок</option>
+  {{ range $key, $lesson := .Lessons }}
+  <option value="{{ $lesson.Number }}" >{{ $lesson.Name }}</option>
+  {{ end }}
+</select>
+{{ end }}
