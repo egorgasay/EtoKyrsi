@@ -10,6 +10,7 @@ func PublicRoutes(r *gin.RouterGroup, h handlers.Handler) {
 	r.Any("/login", h.LoginHandler)
 	r.Any("/mentor-login", h.LoginMentorHandler)
 	r.Any("/logout", h.LogoutHandler)
+	r.Any("/doc", h.DocHandler)
 }
 
 func PrivateRoutes(r *gin.RouterGroup, h handlers.Handler) {

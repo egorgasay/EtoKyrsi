@@ -123,3 +123,7 @@ func (h Handler) LogoutHandler(c *gin.Context) {
 
 	c.Redirect(http.StatusTemporaryRedirect, "/login")
 }
+
+func (h Handler) DocHandler(c *gin.Context) {
+	c.HTML(http.StatusOK, "task--100.htm", gin.H{})
+}

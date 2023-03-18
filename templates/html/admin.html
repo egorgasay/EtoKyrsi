@@ -1,42 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" >
-    <head >
-        <title style="color: brown">ЭтоКурсы.ру</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="utf-8">
-		<link rel="stylesheet" href="/static/css/admin.css">
-		<link rel="stylesheet" href="/static/css/select.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-		<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    </head>
-    <body>
-		{{ template "nav" .}}
-{{ if .Lessons }}
-<form method="get" action="/mentor/view" class="form-select">
-	<input hidden="hidden" value="{{.Count}}" name="count">
-	{{ template "select" .}}<button class="admin-button">Выбрать</button>
-{{ else if .Works }}
+<head >
+    <title style="color: brown">ЭтоКурсы.ру</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <link rel="stylesheet" href="/static/css/select.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+{{ template "nav" .}}
+{{ if .Works }}
     <br>
     <div class="works">
-    <ul>
-        {{range $key, $value := .Works }}
-        <li>
-            <form method="post">
-                <div class="name"  style="font-size: 21px;">Ученик: {{$value.Student}}</div>
-                <div class="subject" style="font-size: 21px;"><a href="{{$value.Link}}" style="color: black;text-decoration-line: black;">Работа ученика</a></div>
-                <div class="time">11:32 pm</div>&nbsp;&nbsp;
-                <input type="radio" name="verdict" value="{{$value.Student}} - ok" class="ok">
-                <input type="radio" name="verdict" value="{{$value.Student}} - bad" class="bad">
-                <input placeholder="Опишите ошибку" name="msg">
-                <button class="admin-button" style="padding: 0; width: 10%; margin-top: 0;">Оценить</button>
-            </form>
-        </li>
-        {{ end }}
-    </ul>
+        <ul>
+            {{range $key, $value := .Works }}
+            <li>
+                <form method="post">
+                    <div class="name"  style="font-size: 21px;">Ученик: {{$value.Student}}</div>
+                    <div class="subject" style="font-size: 21px;"><a href="{{$value.Link}}" style="color: black;text-decoration-line: black;">Работа ученика</a></div>
+                    <div class="time">11:32 pm</div>&nbsp;&nbsp;
+                    <input type="radio" name="verdict" value="{{$value.Student}} - ok" class="ok">
+                    <input type="radio" name="verdict" value="{{$value.Student}} - bad" class="bad">
+                    <input placeholder="Опишите ошибку" name="msg">
+                    <button class="admin-button" style="padding: 0; width: 10%; margin-top: 0;">Оценить</button>
+                </form>
+            </li>
+            {{ end }}
+        </ul>
     </div>
 {{ else }}
-    <br>
-    <h1> У вас нет непроверенных работ :)</h1>
+<br>
+<h1>&nbsp;У вас нет непроверенных работ :)</h1>
 {{end}}
 </form>
 <script  src="/static/js/select.js"></script>

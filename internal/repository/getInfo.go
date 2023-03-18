@@ -6,7 +6,7 @@ import (
 )
 
 func (s Storage) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
-	query := "SELECT task_id, msg FROM Users WHERE student = ?"
+	query := "SELECT task_id, msg, (SELECT count(*) FROM Tasks) as tasks_count FROM Users WHERE student = ?"
 	row := s.DB.QueryRow(query, username)
 
 	err := row.Err()
@@ -16,9 +16,15 @@ func (s Storage) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
 
 	var taskID int
 	var msg sql.NullString
-	err = row.Scan(&taskID, &msg)
+	var tasksCount int
+
+	err = row.Scan(&taskID, &msg, &tasksCount)
 	if err != nil {
 		return 0, sql.NullString{}, err
+	}
+
+	if taskID > tasksCount-1 {
+		taskID = 0
 	}
 
 	return taskID, msg, nil

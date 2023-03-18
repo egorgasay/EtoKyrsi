@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@600&family=Ubuntu:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>etocursi</title>
+    <link rel="stylesheet" href="/static/css/reset.css" />
+    <link rel="stylesheet" href="/static/css/task.css" />
+    <link rel="stylesheet" href="/static/css/message.css">
+  </head>
+  <body>
+{{ template "change" .}}
+	<header>
+	{{ if .error }}
+    {{ template "msg" .}}
+    {{ end }}
+      <div class="exit">
+        <a href="/logout"><img src="/static/img/exit.svg" alt="exit"/></a>
+      </div>
+    </header>
+	<div class="container">
+
+<div class="start">
+	<h1 class="h1">Привет!</h1>
+</div>
+
+<div class="simple-text">
+	Ниже представлена ознокомительная информация с языком разметки MessageUP.
+</div>
+<div class="start">
+	<h1 class="h1"><hr>
+ 
+Поддержка html</h1>
+</div>
+
+<div class="simple-text">
+	MUP можно использовать совместно с html кодом
+</div>
+<div class="simple-text">
+	<hr>
+</div>
+<div class="start">
+	<h1 class="h1">Правила использования</h1>
+</div>
+
+<div class="simple-text">
+	Все @ операторы должны быть отделены пустой строкой сверху и *снизу 
+</div>
+<div class="simple-text">
+	*операторы которые не модифицируют текст
+</div>
+<div class="simple-text">
+	<hr>
+</div>
+<div class="start">
+	<h1 class="h1">1. Стандартный блок сообщения</h1>
+</div>
+
+<div class="simple-text">
+	<code>@msg</code>
+</div>
+<div class="text">
+	Text
+</div>
+
+<div class="simple-text">
+	<hr>
+</div>
+<br>
+<div class="start">
+	<h1 class="h1">2. Предупреждающий блок сообщения</h1>
+</div>
+
+<div class="simple-text">
+	<code>@msg-warn</code>
+</div>
+<div class="text important">
+	Text
+</div>
+
+<div class="simple-text">
+	<hr>
+</div>
+<br>
+<div class="start">
+	<h1 class="h1">3. Заголовок в виде блока сообщения</h1>
+</div>
+
+<div class="simple-text">
+	<code>@msg-header</code>
+</div>
+<h2 class="h2">Text</h2>
+<div class="simple-text">
+	<hr>
+</div>
+<div class="start">
+	<h1 class="h1">4. Перенос строки</h1>
+</div>
+
+<div class="simple-text">
+	<code>@n</code>
+</div>
+<div class="simple-text">
+	Text
+</div>
+<br>
+<div class="simple-text">
+	Text
+</div>
+<div class="simple-text">
+	<hr>
+</div>
+<div class="start">
+	<h1 class="h1">5. Заголовок </h1>
+</div>
+
+<div class="simple-text">
+	<code>@header</code>
+</div>
+<div class="start">
+	<h1 class="h1">Text</h1>
+</div>
+
+<div class="simple-text">
+	<hr>
+</div>
+<div class="start">
+	<h1 class="h1">6. Кнопка-ссылка</h1>
+</div>
+
+<div class="simple-text">
+	 <code>@btn-link<br>
+Text!Test<br>
+Link!https://github.com/egorgasay</code>
+</div>
+<div class="start-btn">
+	<a href="https://github.com/egorgasay"
+              target="_blank"
+              class="start-btn__link">Test</a>
+</div>
+
+<div class="simple-text">
+	<hr>
+</div>
+<br>
+<div class="start">
+	<h1 class="h1">7. Жирный текст</h1>
+</div>
+
+<div class="simple-text">
+	<code>@text</code>
+</div>
+<h3 style="font-size:32px">Text</h3>
+<div class="simple-text">
+	<hr>
+</div>
+<br>
+<div class="start">
+	<h1 class="h1">8. Обычный текст (по умолчанию)</h1>
+</div>
+
+<div class="simple-text">
+	<code>@st</code>
+</div>
+<div class="simple-text">
+	Text
+</div>
+
+	</div>
+    <script src="/static/js/message.js"></script>
+  </body>
+</html>

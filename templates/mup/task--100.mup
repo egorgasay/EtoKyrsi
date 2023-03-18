@@ -1,0 +1,114 @@
+@header
+Привет!
+
+Ниже представлена ознокомительная информация с языком разметки MessageUP.
+
+<hr>
+ 
+@header
+Поддержка html
+
+MUP можно использовать совместно с html кодом
+
+<hr>
+
+@header
+Правила использования
+
+Все @ операторы должны быть отделены пустой строкой сверху и *снизу 
+
+*операторы которые не модифицируют текст
+
+<hr>
+
+@header
+1. Стандартный блок сообщения
+
+<code>@msg</code>
+
+@msg
+Text
+
+<hr>
+
+@n
+
+@header
+2. Предупреждающий блок сообщения
+
+<code>@msg-warn</code>
+
+@msg-warn
+Text
+
+<hr>
+
+@n
+
+@header
+3. Заголовок в виде блока сообщения
+
+<code>@msg-header</code>
+
+@msg-header
+Text
+
+<hr>
+
+@header
+4. Перенос строки
+
+<code>@n</code>
+
+Text
+
+@n
+
+Text
+
+<hr>
+
+@header
+5. Заголовок 
+
+<code>@header</code>
+
+@header
+Text
+
+<hr>
+
+@header
+6. Кнопка-ссылка
+
+ <code>@btn-link<br>
+Text!Test<br>
+Link!https://github.com/egorgasay</code>
+
+@btn-link
+Text!Test
+Link!https://github.com/egorgasay
+
+<hr>
+
+@n
+
+@header
+7. Жирный текст
+
+<code>@text</code>
+
+@text
+Text
+
+<hr>
+
+@n
+
+@header
+8. Обычный текст (по умолчанию)
+
+<code>@st</code>
+@st
+
+Text

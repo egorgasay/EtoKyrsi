@@ -6,6 +6,14 @@ body {
     padding-bottom: 100px;
 }
 
+code {
+    background-color: #eee;
+    border-radius: 3px;
+    font-family: courier, monospace;
+    padding: 0 3px;
+}
+
+
 /* header {
     padding-top: 120px;
 } */

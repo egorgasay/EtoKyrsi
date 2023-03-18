@@ -30,8 +30,8 @@ func (h Handler) MainHandler(c *gin.Context) {
 
 	id, msg, err := h.logic.GetTaskIDAndMsg(username)
 	if err != nil {
-		// TODO:
-		c.HTML(http.StatusOK, "task.htm", gin.H{"error": err})
+		log.Println(err)
+		c.HTML(http.StatusOK, "task--1.htm", gin.H{})
 		return
 	}
 
@@ -40,21 +40,22 @@ func (h Handler) MainHandler(c *gin.Context) {
 	var pending = false
 	pullURL := c.PostForm("pullURL")
 	if pullURL != "" {
-		err := h.logic.SendPullRequest(pullURL, username)
+		err = h.logic.SendPullRequest(pullURL, username)
 		if err != nil {
 			log.Println(err)
-			c.HTML(http.StatusOK, filename, gin.H{"error": err, "Username": username})
+			c.HTML(http.StatusOK, "task--1.htm", gin.H{})
 			return
 		}
 		pending = true
 	} else {
 		pending, err = h.logic.CheckIsPending(username)
 		if err != nil {
-			c.HTML(http.StatusOK, filename, gin.H{"error": err})
+			log.Println(err)
+			c.HTML(http.StatusOK, "task--1.htm", gin.H{})
 			return
 		}
 
-		if msg.String != "" {
+		if msg.String != "" && !pending {
 			c.HTML(http.StatusOK, filename, gin.H{"error": msg.String,
 				"IsPending": false})
 			return

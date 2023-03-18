@@ -54,11 +54,11 @@ func (h Handler) GetChangeTask(c *gin.Context) {
 
 	lessons, err := h.logic.GetTasks(username)
 	if err != nil {
-		c.HTML(http.StatusOK, "admin.html", gin.H{"error": err})
+		c.HTML(http.StatusOK, "lessons.html", gin.H{"error": err})
 		return
 	}
 
-	c.HTML(http.StatusOK, "admin.html", gin.H{"Lessons": lessons, "Count": len(lessons)})
+	c.HTML(http.StatusOK, "lessons.html", gin.H{"Lessons": lessons, "Count": len(lessons)})
 }
 
 func (h Handler) MentorPostHandler(c *gin.Context) {
