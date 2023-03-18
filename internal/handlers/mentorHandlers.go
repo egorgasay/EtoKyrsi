@@ -129,7 +129,7 @@ func (h Handler) viewHelper(c *gin.Context, username, number string) {
 			return
 		}
 
-		task.Number = atoi + 1
+		task.Number = atoi - 1
 		c.HTML(http.StatusOK, "change-task.html", gin.H{"Task": task})
 		return
 	}
