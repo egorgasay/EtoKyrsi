@@ -15,6 +15,7 @@ type Config struct {
 	DataSourceCred string
 }
 
+//go:generate mockgen -source=repository.go -destination=mocks/mock.go
 type IStorage interface {
 	Disconnect() error
 	DeleteAccount() error

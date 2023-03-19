@@ -1,5 +1,9 @@
 package repository
 
+import "errors"
+
+var WrongPasswordErr = errors.New("wrong password")
+
 func (s Storage) CheckPassword(username string, password string) (bool, error) {
 	query := "SELECT count(*) FROM Users WHERE student = ? AND password = ?"
 	var res int
@@ -12,7 +16,7 @@ func (s Storage) CheckPassword(username string, password string) (bool, error) {
 	}
 
 	if res < 1 {
-		return false, err
+		return false, WrongPasswordErr
 	}
 
 	return true, nil
