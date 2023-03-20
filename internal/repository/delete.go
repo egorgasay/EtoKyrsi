@@ -1,10 +1,9 @@
 package repository
 
+import "checkwork/internal/repository/prepared"
+
 func (s Storage) DeletePullRequest(username, student string) error {
-	query := `
-	DELETE FROM PullRequests WHERE student = ?
-`
-	stmt, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("DeletePullRequest")
 	if err != nil {
 		return err
 	}
@@ -18,10 +17,7 @@ func (s Storage) DeletePullRequest(username, student string) error {
 }
 
 func (s Storage) DeleteTask(num int) error {
-	query := `
-	DELETE FROM Tasks WHERE task_id = ?
-`
-	stmt, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("DeleteTask")
 	if err != nil {
 		return err
 	}

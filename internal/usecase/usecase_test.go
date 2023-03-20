@@ -645,10 +645,46 @@ func TestUseCase_HandleUserWork(t *testing.T) {
 			wantErr: false,
 			mockBehavior: func(r *mock_repository.MockIStorage) {
 				r.EXPECT().DeletePullRequest("", "test").
-					Return("test", nil).AnyTimes()
-				r.EXPECT().SetPending("", "bad").
+					Return(nil).AnyTimes()
+				r.EXPECT().SetPending("test", 0).
 					Return(nil).AnyTimes()
 				r.EXPECT().SetVerdict("test", "bad").
+					Return(nil).AnyTimes()
+				r.EXPECT().UpdateUserScore("test").
+					Return(nil).AnyTimes()
+			},
+		},
+		{
+			name: "Ok#2",
+			args: args{
+				username: "",
+				student:  "test",
+				verdict:  "ok",
+				msg:      "",
+			},
+			wantErr: false,
+			mockBehavior: func(r *mock_repository.MockIStorage) {
+				r.EXPECT().DeletePullRequest("", "test").
+					Return(nil).AnyTimes()
+				r.EXPECT().SetPending("test", 0).
+					Return(nil).AnyTimes()
+				r.EXPECT().UpdateUserScore("test").
+					Return(nil).AnyTimes()
+			},
+		},
+		{
+			name: "Ok#2",
+			args: args{
+				username: "",
+				student:  "test",
+				verdict:  "ok",
+				msg:      "",
+			},
+			wantErr: false,
+			mockBehavior: func(r *mock_repository.MockIStorage) {
+				r.EXPECT().DeletePullRequest("", "test").
+					Return(nil).AnyTimes()
+				r.EXPECT().SetPending("test", 0).
 					Return(nil).AnyTimes()
 				r.EXPECT().UpdateUserScore("test").
 					Return(nil).AnyTimes()
@@ -671,28 +707,109 @@ func TestUseCase_HandleUserWork(t *testing.T) {
 }
 
 func TestUseCase_SendPullRequest(t *testing.T) {
-	type fields struct {
-		storage repository.IStorage
-	}
 	type args struct {
 		line    string
 		student string
 	}
 	tests := []struct {
+		name         string
+		args         args
+		wantErr      bool
+		mockBehavior mockBehavior
+	}{
+		{
+			name: "Ok",
+			args: args{
+				line:    "https://github.com/egorgasay",
+				student: "test",
+			},
+			wantErr: false,
+			mockBehavior: func(r *mock_repository.MockIStorage) {
+				r.EXPECT().SetPending("test", 1).
+					Return(nil).AnyTimes()
+				r.EXPECT().AddPullRequest("https://github.com/egorgasay", "test").
+					Return(nil).AnyTimes()
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := gomock.NewController(t)
+			defer c.Finish()
+
+			repos := mock_repository.NewMockIStorage(c)
+			logic := New(repos)
+			tt.mockBehavior(repos)
+			if err := logic.SendPullRequest(tt.args.line, tt.args.student); (err != nil) != tt.wantErr {
+				t.Errorf("SendPullRequest() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestUseCase_UpdateTasks(t *testing.T) {
+	type args struct {
+		username string
+		title    string
+		number   string
+		text     string
+	}
+	tests := []struct {
+		name         string
+		args         args
+		wantErr      bool
+		mockBehavior mockBehavior
+	}{
+		{
+			name: "Ok",
+			args: args{
+				username: "test",
+				title:    "test",
+				number:   "1",
+				text:     "test",
+			},
+			mockBehavior: func(r *mock_repository.MockIStorage) {
+				r.EXPECT().SetPending("test", 1).
+					Return(nil).AnyTimes()
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := gomock.NewController(t)
+			defer c.Finish()
+
+			repos := mock_repository.NewMockIStorage(c)
+			logic := New(repos)
+			tt.mockBehavior(repos)
+			if err := logic.UpdateTasks(tt.args.username, tt.args.title, tt.args.number, tt.args.text); (err != nil) != tt.wantErr {
+				t.Errorf("UpdateTasks() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func Test_convertFileToString(t *testing.T) {
+	type args struct {
+		filename string
+	}
+	tests := []struct {
 		name    string
-		fields  fields
 		args    args
+		want    string
 		wantErr bool
 	}{
 		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			uc := UseCase{
-				storage: tt.fields.storage,
+			got, err := convertFileToString(tt.args.filename)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("convertFileToString() error = %v, wantErr %v", err, tt.wantErr)
+				return
 			}
-			if err := uc.SendPullRequest(tt.args.line, tt.args.student); (err != nil) != tt.wantErr {
-				t.Errorf("SendPullRequest() error = %v, wantErr %v", err, tt.wantErr)
+			if got != tt.want {
+				t.Errorf("convertFileToString() got = %v, want %v", got, tt.want)
 			}
 		})
 	}

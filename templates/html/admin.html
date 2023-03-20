@@ -21,8 +21,9 @@
                     <div class="name"  style="font-size: 21px;">Ученик: {{$value.Student}}</div>
                     <div class="subject" style="font-size: 21px;"><a href="{{$value.Link}}" style="color: black;text-decoration-line: black;">Работа ученика</a></div>
                     <div class="time">11:32 pm</div>&nbsp;&nbsp;
-                    <input type="radio" name="verdict" value="{{$value.Student}} - ok" class="ok">
-                    <input type="radio" name="verdict" value="{{$value.Student}} - bad" class="bad">
+                    <input name="student" value="{{$value.Student}}" hidden="hidden">
+                    <label for="cb">Принято?</label>
+                    <input id="cb" type="checkbox" class="radio" name="verdict" value="ok" style="background:blue;" checked="">
                     <input placeholder="Опишите ошибку" name="msg">
                     <button class="admin-button" style="padding: 0; width: 10%; margin-top: 0;">Оценить</button>
                 </form>

@@ -2,28 +2,24 @@ package repository
 
 import (
 	"checkwork/internal/entity"
+	"checkwork/internal/repository/prepared"
 	"database/sql"
 )
 
 func (s Storage) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
-	query := "SELECT task_id, msg, (SELECT count(*) FROM Tasks) as tasks_count FROM Users WHERE student = ?"
-	row := s.DB.QueryRow(query, username)
-
-	err := row.Err()
+	stmt, err := prepared.GetPreparedStatement("GetTaskIDAndMsg")
 	if err != nil {
 		return 0, sql.NullString{}, err
 	}
-
 	var taskID int
 	var msg sql.NullString
 	var tasksCount int
 
-	err = row.Scan(&taskID, &msg, &tasksCount)
-	if err != nil {
+	if err = stmt.QueryRow(username).Scan(&taskID, &msg, &tasksCount); err != nil {
 		return 0, sql.NullString{}, err
 	}
 
-	if taskID > tasksCount-1 {
+	if taskID > tasksCount-2 {
 		taskID = 0
 	}
 
@@ -36,8 +32,12 @@ type Work struct {
 }
 
 func (s Storage) GetWorks(username string) ([]Work, error) {
-	query := "SELECT student, link FROM PullRequests"
-	rows, err := s.DB.Query(query)
+	stmt, err := prepared.GetPreparedStatement("GetWorks")
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := stmt.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -62,13 +62,12 @@ func (s Storage) GetWorks(username string) ([]Work, error) {
 }
 
 func (s Storage) GetTasks(username string) ([]entity.Task, error) {
-	query := "SELECT task_id, title FROM Tasks"
-	prepare, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("GetTasks")
 	if err != nil {
 		return nil, err
 	}
 
-	rows, err := prepare.Query()
+	rows, err := stmt.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -93,31 +92,21 @@ func (s Storage) GetTasks(username string) ([]entity.Task, error) {
 	return tasks, nil
 }
 
-func (s Storage) GetTitle(number int) (string, error) {
-	query := "SELECT title FROM Tasks WHERE task_id = ?"
-	prepare, err := s.DB.Prepare(query)
+func (s Storage) GetTitle(number int) (title string, err error) {
+	stmt, err := prepared.GetPreparedStatement("GetTitle")
 	if err != nil {
 		return "", err
 	}
-
-	row := prepare.QueryRow(number)
-	err = row.Err()
-	if err != nil {
-		return "", err
-	}
-
-	var title string
-	return title, row.Scan(&title)
+	return title, stmt.QueryRow(number).Scan(&title)
 }
 
 func (s Storage) GetUsers() ([]entity.User, error) {
-	query := "SELECT student, task_id, msg FROM Users"
-	prepare, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("GetUsers")
 	if err != nil {
 		return nil, err
 	}
 
-	rows, err := prepare.Query()
+	rows, err := stmt.Query()
 	if err != nil {
 		return nil, err
 	}

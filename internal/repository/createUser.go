@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"checkwork/internal/repository/prepared"
 	"errors"
 	"github.com/mattn/go-sqlite3"
 )
@@ -8,8 +9,12 @@ import (
 var AlreadyExistsErr = errors.New("already exists")
 
 func (s Storage) CreateUser(username string, password string) error {
-	query := "INSERT INTO Users (student, password, task_id, pending) VALUES (?, ?, 1, 0)"
-	_, err := s.DB.Exec(query, username, password)
+	stmt, err := prepared.GetPreparedStatement("CreateUser")
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(username, password)
 
 	if errors.Is(err, sqlite3.ErrConstraintUnique) {
 		return AlreadyExistsErr

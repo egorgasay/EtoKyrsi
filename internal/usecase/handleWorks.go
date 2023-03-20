@@ -20,7 +20,7 @@ func (uc UseCase) HandleUserWork(username, student, verdict, msg string) error {
 		return err
 	}
 
-	err = uc.storage.SetPending(student, 0) // объеденить с SetVerdict
+	err = uc.storage.SetPending(student, 0) // TODO: объеденить с SetVerdict
 	if err != nil {
 		return err
 	}

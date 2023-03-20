@@ -1,14 +1,12 @@
 package repository
 
-import "log"
+import (
+	"checkwork/internal/repository/prepared"
+	"log"
+)
 
 func (s Storage) SetVerdict(student, verdict string) error {
-	query := `
-	UPDATE Users 
-	SET msg = ?
-	WHERE student = ?;
-`
-	stmt, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("SetVerdict")
 	if err != nil {
 		return err
 	}
@@ -22,14 +20,7 @@ func (s Storage) SetVerdict(student, verdict string) error {
 }
 
 func (s Storage) UpdateUserScore(student string) error {
-	query := `
-UPDATE Users 
-SET 
-    task_id = task_id + 1, 
-	msg = ''
-WHERE student = ?`
-
-	stmt, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("UpdateUserScore")
 	if err != nil {
 		return err
 	}
@@ -43,11 +34,8 @@ WHERE student = ?`
 }
 
 func (s Storage) UpdateTask(num int, title string) error {
-	query := `INSERT OR REPLACE INTO Tasks (task_id, title) VALUES (?, ?)`
-
-	stmt, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("UpdateTask")
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
@@ -61,9 +49,7 @@ func (s Storage) UpdateTask(num int, title string) error {
 }
 
 func (s Storage) AddPullRequest(link, student string) error {
-	query := `INSERT INTO PullRequests (link, student) VALUES (?, ?)`
-
-	stmt, err := s.DB.Prepare(query)
+	stmt, err := prepared.GetPreparedStatement("AddPullRequest")
 	if err != nil {
 		return err
 	}
