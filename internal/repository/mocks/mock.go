@@ -64,21 +64,6 @@ func (mr *MockIStorageMockRecorder) ChangePassword(username, oldPassword, newPas
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangePassword", reflect.TypeOf((*MockIStorage)(nil).ChangePassword), username, oldPassword, newPassword)
 }
 
-// CheckIsMentor mocks base method.
-func (m *MockIStorage) CheckIsMentor(username string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CheckIsMentor", username)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CheckIsMentor indicates an expected call of CheckIsMentor.
-func (mr *MockIStorageMockRecorder) CheckIsMentor(username interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckIsMentor", reflect.TypeOf((*MockIStorage)(nil).CheckIsMentor), username)
-}
-
 // CheckIsPending mocks base method.
 func (m *MockIStorage) CheckIsPending(username string) (bool, error) {
 	m.ctrl.T.Helper()
@@ -138,17 +123,17 @@ func (mr *MockIStorageMockRecorder) DeleteAccount() *gomock.Call {
 }
 
 // DeletePullRequest mocks base method.
-func (m *MockIStorage) DeletePullRequest(username, student string) error {
+func (m *MockIStorage) DeletePullRequest(student string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeletePullRequest", username, student)
+	ret := m.ctrl.Call(m, "DeletePullRequest", student)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeletePullRequest indicates an expected call of DeletePullRequest.
-func (mr *MockIStorageMockRecorder) DeletePullRequest(username, student interface{}) *gomock.Call {
+func (mr *MockIStorageMockRecorder) DeletePullRequest(student interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePullRequest", reflect.TypeOf((*MockIStorage)(nil).DeletePullRequest), username, student)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePullRequest", reflect.TypeOf((*MockIStorage)(nil).DeletePullRequest), student)
 }
 
 // DeleteTask mocks base method.
@@ -196,18 +181,18 @@ func (mr *MockIStorageMockRecorder) GetTaskIDAndMsg(username interface{}) *gomoc
 }
 
 // GetTasks mocks base method.
-func (m *MockIStorage) GetTasks(username string) ([]entity.Task, error) {
+func (m *MockIStorage) GetTasks() ([]entity.Task, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTasks", username)
+	ret := m.ctrl.Call(m, "GetTasks")
 	ret0, _ := ret[0].([]entity.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetTasks indicates an expected call of GetTasks.
-func (mr *MockIStorageMockRecorder) GetTasks(username interface{}) *gomock.Call {
+func (mr *MockIStorageMockRecorder) GetTasks() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTasks", reflect.TypeOf((*MockIStorage)(nil).GetTasks), username)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTasks", reflect.TypeOf((*MockIStorage)(nil).GetTasks))
 }
 
 // GetTitle mocks base method.
@@ -241,18 +226,18 @@ func (mr *MockIStorageMockRecorder) GetUsers() *gomock.Call {
 }
 
 // GetWorks mocks base method.
-func (m *MockIStorage) GetWorks(username string) ([]repository.Work, error) {
+func (m *MockIStorage) GetWorks() ([]repository.Work, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetWorks", username)
+	ret := m.ctrl.Call(m, "GetWorks")
 	ret0, _ := ret[0].([]repository.Work)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetWorks indicates an expected call of GetWorks.
-func (mr *MockIStorageMockRecorder) GetWorks(username interface{}) *gomock.Call {
+func (mr *MockIStorageMockRecorder) GetWorks() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorks", reflect.TypeOf((*MockIStorage)(nil).GetWorks), username)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorks", reflect.TypeOf((*MockIStorage)(nil).GetWorks))
 }
 
 // SetPending mocks base method.

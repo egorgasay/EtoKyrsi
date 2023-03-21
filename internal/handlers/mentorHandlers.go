@@ -1,20 +1,19 @@
 package handlers
 
 import (
+	"checkwork/config"
 	"checkwork/internal/entity"
-	"checkwork/internal/globals"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 func (h Handler) MentorGetHandler(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
@@ -44,7 +43,7 @@ func (h Handler) MentorGetHandler(c *gin.Context) {
 
 func (h Handler) GetChangeTask(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
@@ -64,29 +63,20 @@ func (h Handler) GetChangeTask(c *gin.Context) {
 func (h Handler) MentorPostHandler(c *gin.Context) {
 	session := sessions.Default(c)
 
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
 	}
 
 	username := user.(string)
-	verdict := c.PostForm("verdict")
+	status := c.PostForm("status")
 	msg := c.PostForm("msg")
-	if verdict == "" {
-		c.Redirect(http.StatusFound, "/mentor")
-		return
+	student := c.PostForm("student")
+	if status == "" {
+		status = "bad"
 	}
 
-	split := strings.Split(verdict, " - ")
-
-	if len(split) != 2 {
-		log.Println("Неправильный вердикт")
-		c.HTML(http.StatusOK, "admin.html", gin.H{"error": "Ошибка сервера"})
-		return
-	}
-
-	student, status := split[0], split[1]
 	err := h.logic.HandleUserWork(username, student, status, msg)
 	if err != nil {
 		log.Println(err)
@@ -105,7 +95,7 @@ func (h Handler) MentorPostHandler(c *gin.Context) {
 
 func (h Handler) ViewTask(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
@@ -145,7 +135,7 @@ func (h Handler) viewHelper(c *gin.Context, username, number string) {
 
 func (h Handler) ChangeTask(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
@@ -167,7 +157,7 @@ func (h Handler) ChangeTask(c *gin.Context) {
 
 func (h Handler) DeleteTask(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
@@ -186,25 +176,15 @@ func (h Handler) DeleteTask(c *gin.Context) {
 
 func (h Handler) GetUsers(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
 	}
 
 	username, _ := user.(string)
-	isMentor, err := h.logic.CheckIsMentor(username)
-	if err != nil {
-		c.HTML(http.StatusOK, "admin.html", gin.H{"error": "В доступе отказано"})
-		return
-	}
 
-	if !isMentor {
-		c.Redirect(http.StatusFound, "/")
-		return
-	}
-
-	users, err := h.logic.GetUsers()
+	users, err := h.logic.GetUsers(username)
 	if err != nil {
 		c.HTML(http.StatusOK, "users.html", gin.H{"error": err})
 		return

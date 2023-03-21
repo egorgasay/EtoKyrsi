@@ -1,7 +1,6 @@
 package config
 
 import (
-	"checkwork/internal/globals"
 	"checkwork/internal/repository"
 	"flag"
 	"os"
@@ -44,7 +43,7 @@ func New() *Config {
 		f.key = &key
 	}
 
-	globals.Secret = []byte(*f.key)
+	mentorKey = *f.key
 	return &Config{
 		DBConfig: &repository.Config{
 			DriverName:     "sqlite3",

@@ -2,11 +2,20 @@ package usecase
 
 import (
 	"checkwork/pkg/messageup"
+	"log"
 	"os"
 	"strconv"
 )
 
-func (uc UseCase) UpdateTasks(username, title, number, text string) error {
+func (uc *UseCase) UpdateTasks(username, title, number, text string) error {
+	mentor, err := uc.CheckIsMentor(username) // TODO: REPLACE WITH MIDDLEWARE
+	if err != nil {
+		log.Println(err)
+		return NotAMentorError
+	} else if !mentor {
+		return NotAMentorError
+	}
+
 	file, err := os.OpenFile("templates/mup/task-"+number+".mup", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0777)
 	if err != nil {
 		return err
@@ -44,7 +53,15 @@ func (uc UseCase) UpdateTasks(username, title, number, text string) error {
 	return nil
 }
 
-func (uc UseCase) DeleteTasks(username, number string) error {
+func (uc *UseCase) DeleteTasks(username, number string) error {
+	mentor, err := uc.CheckIsMentor(username) // TODO: REPLACE WITH MIDDLEWARE
+	if err != nil {
+		log.Println(err)
+		return NotAMentorError
+	} else if !mentor {
+		return NotAMentorError
+	}
+
 	num, err := strconv.Atoi(number)
 	if err != nil {
 		return err

@@ -5,40 +5,35 @@ import (
 	"checkwork/internal/entity"
 	"checkwork/internal/repository"
 	"database/sql"
+	"log"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func (uc UseCase) GetWorks(username string) ([]repository.Work, error) {
-	return uc.storage.GetWorks(username)
+func (uc *UseCase) GetWorks(username string) ([]repository.Work, error) {
+	mentor, err := uc.CheckIsMentor(username) // TODO: REPLACE WITH MIDDLEWARE
+	if err != nil {
+		log.Println(err)
+		return nil, NotAMentorError
+	} else if !mentor {
+		return nil, NotAMentorError
+	}
+
+	return uc.storage.GetWorks()
 }
 
-func (uc UseCase) GetUsers() ([]entity.User, error) {
+func (uc *UseCase) GetUsers(username string) ([]entity.User, error) {
+	mentor, err := uc.CheckIsMentor(username) // TODO: REPLACE WITH MIDDLEWARE
+	if err != nil {
+		log.Println(err)
+		return nil, NotAMentorError
+	} else if !mentor {
+		return nil, NotAMentorError
+	}
+
 	return uc.storage.GetUsers()
 }
-
-//func (uc UseCase) GetHTMLTask(number string) (func(obj any) (string, error), error) {
-//	str, err := convertFileToString("templates/html/task-" + number + ".htm")
-//	if err != nil {
-//		return nil, err
-//	}
-//	var buf = make([]byte, 0)
-//	buffer := bytes.NewBuffer(buf)
-//	tmpl, err := template.New("task").Parse(str)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//
-//	return func(obj any) (string, error) {
-//		err = tmpl.Execute(buffer, obj)
-//		if err != nil {
-//			return "", err
-//		}
-//		return buffer.String(), nil
-//	}, err
-//}
 
 func convertFileToString(filename string) (string, error) {
 	file, err := os.OpenFile(filename, os.O_RDONLY|os.O_CREATE|os.O_APPEND, 0777)
@@ -57,7 +52,15 @@ func convertFileToString(filename string) (string, error) {
 	return sb.String(), nil
 }
 
-func (uc UseCase) GetTask(username string, number string) (task entity.Task, err error) {
+func (uc *UseCase) GetTask(username string, number string) (task entity.Task, err error) {
+	mentor, err := uc.CheckIsMentor(username) // TODO: REPLACE WITH MIDDLEWARE
+	if err != nil {
+		log.Println(err)
+		return entity.Task{}, NotAMentorError
+	} else if !mentor {
+		return entity.Task{}, NotAMentorError
+	}
+
 	str, err := convertFileToString("templates/mup/task-" + number + ".mup")
 	if err != nil {
 		return entity.Task{}, err
@@ -80,10 +83,18 @@ func (uc UseCase) GetTask(username string, number string) (task entity.Task, err
 	return task, nil
 }
 
-func (uc UseCase) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
+func (uc *UseCase) GetTaskIDAndMsg(username string) (int, sql.NullString, error) {
 	return uc.storage.GetTaskIDAndMsg(username)
 }
 
-func (uc UseCase) GetTasks(username string) ([]entity.Task, error) {
-	return uc.storage.GetTasks(username)
+func (uc *UseCase) GetTasks(username string) ([]entity.Task, error) {
+	mentor, err := uc.CheckIsMentor(username) // TODO: REPLACE WITH MIDDLEWARE
+	if err != nil {
+		log.Println(err)
+		return nil, NotAMentorError
+	} else if !mentor {
+		return nil, NotAMentorError
+	}
+
+	return uc.storage.GetTasks()
 }

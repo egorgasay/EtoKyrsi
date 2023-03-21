@@ -1,6 +1,8 @@
 package usecase
 
-func (uc UseCase) SendPullRequest(line, student string) error {
+import "log"
+
+func (uc *UseCase) SendPullRequest(line, student string) error {
 	err := uc.storage.SetPending(student, 1)
 	if err != nil {
 		return err
@@ -14,8 +16,16 @@ func (uc UseCase) SendPullRequest(line, student string) error {
 	return nil
 }
 
-func (uc UseCase) HandleUserWork(username, student, verdict, msg string) error {
-	err := uc.storage.DeletePullRequest(username, student)
+func (uc *UseCase) HandleUserWork(username, student, verdict, msg string) error {
+	mentor, err := uc.CheckIsMentor(username) // TODO: REPLACE WITH MIDDLEWARE
+	if err != nil {
+		log.Println(err)
+		return NotAMentorError
+	} else if !mentor {
+		return NotAMentorError
+	}
+
+	err = uc.storage.DeletePullRequest(student)
 	if err != nil {
 		return err
 	}

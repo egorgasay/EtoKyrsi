@@ -31,7 +31,7 @@ type Work struct {
 	Link    string
 }
 
-func (s Storage) GetWorks(username string) ([]Work, error) {
+func (s Storage) GetWorks() ([]Work, error) {
 	stmt, err := prepared.GetPreparedStatement("GetWorks")
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func (s Storage) GetWorks(username string) ([]Work, error) {
 	return works, nil
 }
 
-func (s Storage) GetTasks(username string) ([]entity.Task, error) {
+func (s Storage) GetTasks() ([]entity.Task, error) {
 	stmt, err := prepared.GetPreparedStatement("GetTasks")
 	if err != nil {
 		return nil, err

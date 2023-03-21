@@ -215,7 +215,7 @@ func TestUseCase_DeleteTasks(t *testing.T) {
 		{
 			name: "Ok",
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 				number:   "12",
 			},
 			mockBehavior: func(r *mock_repository.MockIStorage) {
@@ -267,7 +267,7 @@ func TestUseCase_GetTask(t *testing.T) {
 		{
 			name: "Ok",
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 				number:   "-99",
 			},
 			wantTask: entity.Task{
@@ -283,7 +283,7 @@ func TestUseCase_GetTask(t *testing.T) {
 		{
 			name: "No such file",
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 				number:   "/99",
 			},
 			wantTask: entity.Task{
@@ -300,7 +300,7 @@ func TestUseCase_GetTask(t *testing.T) {
 		{
 			name: "No such title",
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 				number:   "-99",
 			},
 			wantTask: entity.Task{
@@ -453,7 +453,7 @@ func TestUseCase_GetTasks(t *testing.T) {
 		{
 			name: "Ok",
 			mockBehavior: func(r *mock_repository.MockIStorage) {
-				r.EXPECT().GetTasks("").
+				r.EXPECT().GetTasks().
 					Return(
 						[]entity.Task{
 							entity.Task{
@@ -464,7 +464,7 @@ func TestUseCase_GetTasks(t *testing.T) {
 						}, nil).AnyTimes()
 			},
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 			},
 			want: []entity.Task{
 				entity.Task{
@@ -477,12 +477,12 @@ func TestUseCase_GetTasks(t *testing.T) {
 		{
 			name: "DB Error",
 			mockBehavior: func(r *mock_repository.MockIStorage) {
-				r.EXPECT().GetTasks("").
+				r.EXPECT().GetTasks().
 					Return(
 						[]entity.Task{}, errors.New("db error")).AnyTimes()
 			},
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 			},
 			wantErr: true,
 			want:    []entity.Task{},
@@ -510,14 +510,21 @@ func TestUseCase_GetTasks(t *testing.T) {
 }
 
 func TestUseCase_GetUsers(t *testing.T) {
+	type args struct {
+		username string
+	}
 	tests := []struct {
 		name         string
+		args         args
 		mockBehavior mockBehavior
 		want         []entity.User
 		wantErr      bool
 	}{
 		{
 			name: "Ok",
+			args: args{
+				username: "CHANGE ME",
+			},
 			mockBehavior: func(r *mock_repository.MockIStorage) {
 				r.EXPECT().GetUsers().
 					Return([]entity.User{
@@ -538,6 +545,9 @@ func TestUseCase_GetUsers(t *testing.T) {
 		},
 		{
 			name: "No users",
+			args: args{
+				username: "CHANGE ME",
+			},
 			mockBehavior: func(r *mock_repository.MockIStorage) {
 				r.EXPECT().GetUsers().
 					Return([]entity.User{}, sql.ErrNoRows).AnyTimes()
@@ -555,7 +565,7 @@ func TestUseCase_GetUsers(t *testing.T) {
 			logic := New(repos)
 			tt.mockBehavior(repos)
 
-			got, err := logic.GetUsers()
+			got, err := logic.GetUsers(tt.args.username)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetUsers() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -581,7 +591,7 @@ func TestUseCase_GetWorks(t *testing.T) {
 		{
 			name: "Ok",
 			mockBehavior: func(r *mock_repository.MockIStorage) {
-				r.EXPECT().GetWorks("").
+				r.EXPECT().GetWorks().
 					Return([]repository.Work{
 						{
 							Student: "test",
@@ -596,7 +606,7 @@ func TestUseCase_GetWorks(t *testing.T) {
 				},
 			},
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 			},
 		},
 	}
@@ -637,14 +647,14 @@ func TestUseCase_HandleUserWork(t *testing.T) {
 		{
 			name: "Ok",
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 				student:  "test",
 				verdict:  "bad",
 				msg:      "bad",
 			},
 			wantErr: false,
 			mockBehavior: func(r *mock_repository.MockIStorage) {
-				r.EXPECT().DeletePullRequest("", "test").
+				r.EXPECT().DeletePullRequest("test").
 					Return(nil).AnyTimes()
 				r.EXPECT().SetPending("test", 0).
 					Return(nil).AnyTimes()
@@ -657,14 +667,14 @@ func TestUseCase_HandleUserWork(t *testing.T) {
 		{
 			name: "Ok#2",
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 				student:  "test",
 				verdict:  "ok",
 				msg:      "",
 			},
 			wantErr: false,
 			mockBehavior: func(r *mock_repository.MockIStorage) {
-				r.EXPECT().DeletePullRequest("", "test").
+				r.EXPECT().DeletePullRequest("test").
 					Return(nil).AnyTimes()
 				r.EXPECT().SetPending("test", 0).
 					Return(nil).AnyTimes()
@@ -675,14 +685,14 @@ func TestUseCase_HandleUserWork(t *testing.T) {
 		{
 			name: "Ok#2",
 			args: args{
-				username: "",
+				username: "CHANGE ME",
 				student:  "test",
 				verdict:  "ok",
 				msg:      "",
 			},
 			wantErr: false,
 			mockBehavior: func(r *mock_repository.MockIStorage) {
-				r.EXPECT().DeletePullRequest("", "test").
+				r.EXPECT().DeletePullRequest("test").
 					Return(nil).AnyTimes()
 				r.EXPECT().SetPending("test", 0).
 					Return(nil).AnyTimes()
@@ -763,13 +773,13 @@ func TestUseCase_UpdateTasks(t *testing.T) {
 		{
 			name: "Ok",
 			args: args{
-				username: "test",
+				username: "CHANGE ME",
 				title:    "test",
 				number:   "1",
 				text:     "test",
 			},
 			mockBehavior: func(r *mock_repository.MockIStorage) {
-				r.EXPECT().SetPending("test", 1).
+				r.EXPECT().UpdateTask(1, "test").
 					Return(nil).AnyTimes()
 			},
 		},

@@ -2,7 +2,6 @@ package main
 
 import (
 	"checkwork/config"
-	"checkwork/internal/globals"
 	"checkwork/internal/handlers"
 	"checkwork/internal/middleware"
 	"checkwork/internal/repository"
@@ -34,7 +33,7 @@ func main() {
 	r.Static("/static", "static")
 	r.NoRoute(h.NotFoundHandler)
 
-	r.Use(sessions.Sessions("session", cookie.NewStore(globals.Secret)))
+	r.Use(sessions.Sessions("session", cookie.NewStore([]byte(config.GetSecretKey()))))
 
 	public := r.Group("/")
 	routes.PublicRoutes(public, *h)

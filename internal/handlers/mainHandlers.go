@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"checkwork/internal/globals"
+	"checkwork/config"
 	"checkwork/internal/usecase"
 	"fmt"
 	"github.com/gin-contrib/sessions"
@@ -20,7 +20,7 @@ func NewHandler(logic usecase.UseCase) *Handler {
 
 func (h Handler) MainHandler(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return

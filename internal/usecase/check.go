@@ -1,11 +1,13 @@
 package usecase
 
-import "checkwork/internal/globals"
+import (
+	"checkwork/config"
+)
 
 func (uc *UseCase) CheckIsPending(username string) (bool, error) {
 	return uc.storage.CheckIsPending(username)
 }
 
 func (uc *UseCase) CheckIsMentor(username string) (bool, error) {
-	return username == string(globals.Secret), nil
+	return username == config.GetMentorKey(), nil
 }

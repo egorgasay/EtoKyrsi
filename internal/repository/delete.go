@@ -2,7 +2,7 @@ package repository
 
 import "checkwork/internal/repository/prepared"
 
-func (s Storage) DeletePullRequest(username, student string) error {
+func (s Storage) DeletePullRequest(student string) error {
 	stmt, err := prepared.GetPreparedStatement("DeletePullRequest")
 	if err != nil {
 		return err

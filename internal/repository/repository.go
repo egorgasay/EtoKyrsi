@@ -34,15 +34,15 @@ type IStorage interface {
 	CheckIsPending(username string) (bool, error)
 
 	GetTaskIDAndMsg(username string) (int, sql.NullString, error)
-	GetWorks(username string) ([]Work, error)
+	GetWorks() ([]Work, error)
 
 	SetVerdict(student, verdict string) error
-	DeletePullRequest(username, student string) error
+	DeletePullRequest(student string) error
 	AddPullRequest(link, student string) error
 
 	UpdateTask(num int, title string) error
 	DeleteTask(num int) error
-	GetTasks(username string) ([]entity.Task, error)
+	GetTasks() ([]entity.Task, error)
 	GetTitle(number int) (string, error)
 }
 

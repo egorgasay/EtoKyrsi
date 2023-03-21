@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"checkwork/internal/globals"
+	"checkwork/config"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -10,7 +10,7 @@ import (
 
 func (h Handler) SendWorkGetHandler(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return
@@ -33,7 +33,7 @@ func (h Handler) SendWorkGetHandler(c *gin.Context) {
 func (h Handler) SendWorkPostHandler(c *gin.Context) {
 	session := sessions.Default(c)
 
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user == nil {
 		c.Redirect(http.StatusFound, "/login")
 		return

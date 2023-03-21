@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"checkwork/internal/globals"
+	"checkwork/config"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -11,7 +11,7 @@ import (
 func (h Handler) RegisterHandler(c *gin.Context) {
 	session := sessions.Default(c)
 
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user != nil {
 		c.Redirect(http.StatusFound, "/logout")
 		return
@@ -45,7 +45,7 @@ func (h Handler) RegisterHandler(c *gin.Context) {
 
 func (h Handler) LoginHandler(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user != nil {
 		c.Redirect(http.StatusFound, "/")
 		return
@@ -69,7 +69,7 @@ func (h Handler) LoginHandler(c *gin.Context) {
 		c.HTML(http.StatusOK, "login.html", gin.H{"err": "Неверные данные!"})
 		return
 	} else if status && password != "" {
-		session.Set(globals.Userkey, username)
+		session.Set(config.Userkey, username)
 		if err := session.Save(); err != nil {
 			c.HTML(http.StatusInternalServerError, "login.html", gin.H{"err": "Failed to save session"})
 			return
@@ -85,7 +85,7 @@ func (h Handler) LoginHandler(c *gin.Context) {
 
 func (h Handler) LoginMentorHandler(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(globals.Userkey)
+	user := session.Get(config.Userkey)
 	if user != nil {
 		c.Redirect(http.StatusFound, "/")
 		return
@@ -98,12 +98,12 @@ func (h Handler) LoginMentorHandler(c *gin.Context) {
 
 	key := c.PostForm("password")
 
-	if string(globals.Secret) != key {
+	if config.GetMentorKey() != key {
 		c.HTML(http.StatusOK, "mentorlogin.html", gin.H{"err": "Неверные данные!"})
 		return
 	}
 
-	session.Set(globals.Userkey, key)
+	session.Set(config.Userkey, key)
 	if err := session.Save(); err != nil {
 		c.HTML(http.StatusInternalServerError, "mentorlogin.html", gin.H{"err": "Failed to save session"})
 		return
@@ -115,7 +115,7 @@ func (h Handler) LoginMentorHandler(c *gin.Context) {
 func (h Handler) LogoutHandler(c *gin.Context) {
 	session := sessions.Default(c)
 
-	session.Delete(globals.Userkey)
+	session.Delete(config.Userkey)
 	if err := session.Save(); err != nil {
 		log.Println("Failed to delete session:", err)
 		return
