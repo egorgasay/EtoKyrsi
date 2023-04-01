@@ -2,7 +2,6 @@ package repository
 
 import (
 	"checkwork/internal/entity"
-	"checkwork/internal/repository/prepared"
 	"database/sql"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/sqlite3"
@@ -16,7 +15,6 @@ type Config struct {
 	DataSourceCred string
 }
 
-//go:generate mockgen -source=repository.go -destination=mocks/mock.go
 type IStorage interface {
 	Disconnect() error
 	DeleteAccount() error
@@ -25,9 +23,8 @@ type IStorage interface {
 	GetUsers() ([]entity.User, error)
 
 	CheckPassword(username, password string) (bool, error)
-	// CheckIsMentor(username string) (bool, error)
 
-	// ChangeNick(username, nick string) error
+	//ChangeNick(username, nick string) error
 	ChangePassword(username, oldPassword, newPassword string) error
 
 	SetPending(username string, status int) error
@@ -85,13 +82,7 @@ func New(db *sql.DB, pathToMigrations string) IStorage {
 		}
 	}
 
-	st := &Storage{db}
-
-	if err = prepared.Prepare(st.DB); err != nil {
-		log.Fatalf("Failed to initialize: %s", err.Error())
-	}
-
-	return st
+	return Storage{db}
 }
 
 func (s Storage) Disconnect() error {

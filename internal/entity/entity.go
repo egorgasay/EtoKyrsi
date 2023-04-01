@@ -1,5 +1,7 @@
 package entity
 
+import "database/sql"
+
 type Task struct {
 	Name   string
 	Number int
@@ -9,5 +11,5 @@ type Task struct {
 type User struct {
 	Name        string
 	Level       int
-	LastComment string
+	LastComment sql.NullString
 }
