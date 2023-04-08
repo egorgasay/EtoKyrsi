@@ -33,3 +33,56 @@ MUP можно использовать вместе с html кодом
 @msg
 ```
 ![image](https://user-images.githubusercontent.com/128689324/227161716-fb85d675-3f53-42c5-88b6-41ffde65dad4.png)
+## 1. Стандартный блок сообщения
+```python3
+@msg
+```
+![image](https://user-images.githubusercontent.com/128689324/227161716-fb85d675-3f53-42c5-88b6-41ffde65dad4.png)
+
+## 2. Предупреждающий блок сообщения
+```python3
+@msg-warn
+```
+![image](https://user-images.githubusercontent.com/102957432/230735207-8a74be14-e8ac-4f22-a033-e265b1d1b96c.png)
+
+
+## 3. Заголовок в виде блока сообщения
+```python3
+@msg-header
+```
+![image](https://user-images.githubusercontent.com/102957432/230735218-a5ded23a-8495-49a4-8df5-82ca70506484.png)
+
+
+## 4. Перенос строки
+```python3
+@n
+```
+![image](https://user-images.githubusercontent.com/102957432/230735226-d56f7e8e-8970-4ee2-a6ca-8bfc4ced4dcc.png)
+
+
+## 5. Заголовок
+```python3
+@header
+```
+![image](https://user-images.githubusercontent.com/102957432/230735238-418653cc-6e86-4e6b-a97d-5f3408851c67.png)
+
+## 6. Кнопка-ссылка
+```python3
+@btn-link  
+Text!Test  
+Link!https://github.com/egorgasay
+```
+![image](https://user-images.githubusercontent.com/102957432/230735289-68825fe0-61e0-41dd-91ad-97abfb117b47.png)
+
+## 7. Жирный текст
+```python3
+@text
+```
+![image](https://user-images.githubusercontent.com/102957432/230735294-a7bf203a-ab02-44ff-a4fe-ed810a3b4cb6.png)
+
+
+## 7. Обычный текст (по умолчанию)
+```python3
+@st
+```
+![image](https://user-images.githubusercontent.com/102957432/230735304-ce0e1802-9e83-4715-8907-dd0618acebed.png)
